@@ -16,8 +16,8 @@ Fixed / derived parameters
 
 Design assessment
 - C11 is retained as a spatial reference and strengthened with 60x80x4 lap rails and diagonal splice members.
-- C16 front study is reorganized into paired continuous rails, four crossmembers, wheel outriggers, and proxy tower load paths.
-- Probox Rev01 is retained as a packaging reference; rear-drive transaxle feasibility, mounts, axle geometry, lubrication, cooling, and service removal remain unresolved.
+- The supplied C18 GX100 assembly is now the front module; only three named RHS cabin adapters are added, and the previous proxy front members are hidden/excluded from the module export.
+- The supplied Probox Rev01 cassette is now the rear module; only four named RHS cradle adapters are added, while transaxle feasibility, mounts, axle geometry, lubrication, cooling, and service removal remain unresolved.
 - Scaled central shell station loft is reference geometry only; validated fenders are absent and wheel/arch conflict X-03 remains open.
 
 Engineering limitations

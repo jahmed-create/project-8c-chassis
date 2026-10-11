@@ -1,4 +1,11 @@
 part_id,section,outer_y,outer_z,wall,length_mm,status,start,end,notes
+F1-C18-ADAPTER-L,RHS,60,80,4,189.64,P,"(2375, 510, 445)","(2551, 579, 430)",Cabin-to-C18 adapter; no donor holes
+F1-C18-ADAPTER-R,RHS,60,80,4,189.64,P,"(2375, -510, 445)","(2551, -579, 430)",Cabin-to-C18 adapter; no donor holes
+F1-C18-ADAPTER-TIE,RHS,60,60,4,1158.0,P,"(2551, -579, 430)","(2551, 579, 430)",Front module rear tie; donor interface not measured
+R3-PROBOX-ADAPTER-L,RHS,60,80,4,1741.87,P,"(-791, 650, 390)","(950, 650, 445)",Cradle-side adapter; donor mount coordinates unmeasured
+R3-PROBOX-ADAPTER-R,RHS,60,80,4,1741.87,P,"(-791, -650, 390)","(950, -650, 445)",Cradle-side adapter; donor mount coordinates unmeasured
+R3-PROBOX-ADAPTER-FRONT,RHS,60,60,4,1300.0,P,"(-791, -650, 390)","(-791, 650, 390)",Rear cradle front tie
+R3-PROBOX-ADAPTER-REAR,RHS,60,60,4,1300.0,P,"(950, -650, 445)","(950, 650, 445)",Rear cradle tie; crash/service review required
 C2-LS-L,RHS,50,100,3,1661.0,P,"(890, 510, 445)","(2551, 510, 445)",Primary sill
 C2-US-L,RHS,40,60,3,1661.0,P,"(890, 510, 675)","(2551, 510, 675)",Upper door rail
 C2-SIDE-L-1,RHS,40,40,3,130.0,P,"(915, 510, 545)","(915, 510, 675)",Sill connector

@@ -1,7 +1,9 @@
-# Rebuild review note
+# Front/rear module replacement review
 
-The earlier proxy-only export was inadequate because it did not carry the supplied donor assemblies in the principal review assembly and its structure read as disconnected schematic members. This revision supersedes that result.
+The supplied C18 GX100 STEP is now the actual front-module payload. `Project_8C_Chassis_01_Front.step` contains the 108 supplied C18 solids plus three explicitly named cabin-to-C18 RHS adapter members. The old proxy front frame members remain in the FreeCAD history tree as hidden comparison geometry and are excluded from the front export.
 
-The current master keeps the supplied C18 GX100 study, C11 cabin study, and Probox cassette as separate, status-tagged reference groups and includes them in the full review STEP at their supplied global positions. A separate structural STEP contains only the redesigned RHS weldment and conflict/interface geometry.
+The supplied Probox cassette is now the actual rear-module payload. `Project_8C_Chassis_03_Rear.step` contains the 199 supplied Probox solids plus four named RHS cradle adapter members. The old proxy rear frame members remain hidden comparison geometry and are excluded from the rear export.
 
-The frame now has continuous rear-to-front rail intent, diagonal rear cradle load paths, front and rear tower ties, a cabin floor/shear reference, side-door diagonals, wheel and tyre envelopes, a scaled body opening study, and a service-access boundary. All donor mounting coordinates remain survey items, and all safety-critical features remain HOLD.
+`Project_8C_Structural_Chassis_Assembly.step` contains the cabin, continuity/interface weldment, and only the adapter members. `Project_8C_Master_Chassis_Assembly.step` contains the body opening study, wheel/tyre envelopes, cabin, continuity structure, and the actual supplied C18/Probox/C11 reference payloads at their global coordinates.
+
+The donor assemblies are still provisional design inputs. No hole pattern, bolt axis, suspension mount, drivetrain orientation, or safety claim is inferred from their visual alignment.

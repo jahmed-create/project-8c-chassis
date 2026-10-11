@@ -88,6 +88,14 @@ member_rows=[]
 def member(grp,n,p0,p1,sy,sz,wall,status,source,notes,section='RHS'):
     o=feature(grp,n,tube(p0,p1,sy,sz,wall),status,source,n,notes); add_prop(o,'App::PropertyLength','OuterY',sy,'RHS'); add_prop(o,'App::PropertyLength','OuterZ',sz,'RHS'); add_prop(o,'App::PropertyLength','Wall',wall,'RHS'); add_prop(o,'App::PropertyString','StartNode',str(tuple(round(v,2) for v in p0)),'RHS'); add_prop(o,'App::PropertyString','EndNode',str(tuple(round(v,2) for v in p1)),'RHS'); add_prop(o,'App::PropertyString','Section',section,'RHS'); color(o,(0.72,0.72,0.75))
     member_rows.append({'part_id':n,'section':section,'outer_y':sy,'outer_z':sz,'wall':wall,'length_mm':round(math.dist(p0,p1),2),'status':status,'start':p0,'end':p1,'notes':notes}); return o
+# The supplied donor assemblies are now the module payloads.  These short
+# RHS members are only integration adapters; they do not invent donor bolt
+# coordinates or replace the source suspension geometry.
+front_adapter_objs=[]; rear_adapter_objs=[]
+front_replacement=feature(g_front,'F1-C18-Replacement-Assembly',donor_front_shape,'P','Supplied C18 STEP; selected front module','F1-C18-REPLACEMENT','Actual supplied front assembly is the module payload; interfaces remain survey HOLD'); color(front_replacement,(0.95,0.70,0.15),18)
+front_adapter_objs += [member(g_front,'F1-C18-ADAPTER-L',(2375,510,445),(2551,579,430),60,80,4,'P','C17 integration adapter','Cabin-to-C18 adapter; no donor holes'), member(g_front,'F1-C18-ADAPTER-R',(2375,-510,445),(2551,-579,430),60,80,4,'P','C17 integration adapter','Cabin-to-C18 adapter; no donor holes'), member(g_front,'F1-C18-ADAPTER-TIE',(2551,-579,430),(2551,579,430),60,60,4,'P','C17 integration adapter','Front module rear tie; donor interface not measured')]
+rear_replacement=feature(g_rear,'R3-Probox-Replacement-Assembly',donor_rear_shape,'P','Supplied Probox Rev01 STEP; selected rear module','R3-PROBOX-REPLACEMENT','Actual supplied rear cassette is the module payload; engine/transaxle feasibility remains HOLD'); color(rear_replacement,(0.85,0.50,0.20),18)
+rear_adapter_objs += [member(g_rear,'R3-PROBOX-ADAPTER-L',(-791,650,390),(950,650,445),60,80,4,'P','C17 rear integration adapter','Cradle-side adapter; donor mount coordinates unmeasured'), member(g_rear,'R3-PROBOX-ADAPTER-R',(-791,-650,390),(950,-650,445),60,80,4,'P','C17 rear integration adapter','Cradle-side adapter; donor mount coordinates unmeasured'), member(g_rear,'R3-PROBOX-ADAPTER-FRONT',(-791,-650,390),(-791,650,390),60,60,4,'P','C17 rear integration adapter','Rear cradle front tie'), member(g_rear,'R3-PROBOX-ADAPTER-REAR',(950,-650,445),(950,650,445),60,60,4,'P','C17 rear integration adapter','Rear cradle tie; crash/service review required')]
 # cabin
 for side,y in [('L',510),('R',-510)]:
     member(g_cabin,f'C2-LS-{side}',(890,y,445),(2551,y,445),50,100,3,'P','C11 member schedule','Primary sill'); member(g_cabin,f'C2-US-{side}',(890,y,675),(2551,y,675),40,60,3,'P','C11 member schedule','Upper door rail')
@@ -142,11 +150,15 @@ for i,(x,y) in enumerate([(1100,510),(1100,-510),(2450,510),(2450,-510)],1):
     o=feature(g_bodymount,f'BM-{i}',marker((x,y,430),12,25),'P','Body mount concept','BODY-MOUNT','Composite-body isolation mount; skin unverified'); color(o,(0.2,0.7,0.9))
 load=feature(g_analysis,'A-LoadPath-Reference',Part.makePolygon([App.Vector(-791,0,430),App.Vector(950,0,430),App.Vector(2551,0,445),App.Vector(4545,0,500)]),'E','C17 analysis requirement','ANALYSIS-LOADPATH','Schematic only; no FEA'); color(load,(1.0,0.1,0.1))
 # save/export
-front_objs=[o for o in g_front.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; cabin_objs=[o for o in g_cabin.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; rear_objs=[o for o in g_rear.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; int_objs=[o for o in g_int.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; structural_objs=front_objs+cabin_objs+rear_objs+int_objs; review_objs=structural_objs+[donor_front,donor_rear,c11_ref,body_open]+front_wheels+rear_wheels
+front_objs=front_adapter_objs+[front_replacement]; cabin_objs=[o for o in g_cabin.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; rear_objs=rear_adapter_objs+[rear_replacement]; int_objs=[o for o in g_int.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; structural_objs=front_adapter_objs+cabin_objs+rear_adapter_objs+int_objs; review_objs=structural_objs+[front_replacement,rear_replacement,c11_ref,body_open]+front_wheels+rear_wheels
+for old in list(g_front.Group)+list(g_rear.Group):
+    if old not in front_objs and old not in rear_objs:
+        try: old.ViewObject.Visibility=False
+        except Exception: pass
 
 doc.recompute(); doc.saveAs(str(OUT/'Project_8C_Master_Chassis.FCStd'))
 for objs,path in [(front_objs,OUT/'Project_8C_Chassis_01_Front.step'),(cabin_objs,OUT/'Project_8C_Chassis_02_Cabin.step'),(rear_objs,OUT/'Project_8C_Chassis_03_Rear.step'),(structural_objs,OUT/'Project_8C_Structural_Chassis_Assembly.step'),(review_objs,OUT/'Project_8C_Master_Chassis_Assembly.step')]: Part.export(objs,str(path))
-Part.export([donor_front,donor_rear,c11_ref],str(OUT/'Project_8C_Donor_Proxies_Review.step'))
+Part.export([front_replacement,rear_replacement,c11_ref],str(OUT/'Project_8C_Donor_Proxies_Review.step'))
 with open(OUT/'Project_8C_Datum_and_Hardpoint_Registry.csv','w',newline='') as f:
     w=csv.writer(f); w.writerow(['id','x_mm','y_mm','z_mm','status','source','notes']); [w.writerow(list(r)+['Marker only']) for r in hardpoints]
 registry=ROOT/'references/Project_8C_C17_Hardpoint_Registry.csv'

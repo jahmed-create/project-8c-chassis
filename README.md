@@ -17,4 +17,4 @@ PYTHONHOME=/usr \
 The script requires the supplied STEP references under `references/` and writes all generated files to `deliverables/`. The master FCStd tree is organized into parameters, body reference, hardpoints, donor references, front/cabin/rear weldments, global interfaces, occupants, body mounts, analysis, fabrication, and exports.
 
 
-`Project_8C_Structural_Chassis_Assembly.step` is the weldment-only export. `Project_8C_Master_Chassis_Assembly.step` is the full review assembly with the supplied C11, C18, Probox, body, and wheel reference geometry.
+`Project_8C_Chassis_01_Front.step` now carries the supplied C18 front module plus named cabin adapters. `Project_8C_Chassis_03_Rear.step` carries the supplied Probox rear module plus named cradle adapters. `Project_8C_Structural_Chassis_Assembly.step` is the weldment/interface-only export. `Project_8C_Master_Chassis_Assembly.step` is the full review assembly with the supplied C11, C18, Probox, body, and wheel reference geometry.
