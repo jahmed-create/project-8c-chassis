@@ -1,10 +1,11 @@
-category,section,wall_mm,status,qty,nominal_total_length_mm,part_ids,release_note
-RHS,40x40,3,P,12,1961.7,C2-SIDE-L-1;C2-SIDE-L-2;C2-SIDE-L-3;C2-SIDE-L-4;C2-SIDE-L-5;C2-SIDE-R-1;C2-SIDE-R-2;C2-SIDE-R-3;C2-SIDE-R-4;C2-SIDE-R-5;I-FRONT-CABIN-XBRACE-L;I-FRONT-CABIN-XBRACE-R,Nominal CAD centreline lengths; final cuts require trim/jig review
-RHS,40x50,3,P,4,1397.1,F1-LOWER-OUT-L;F1-NOSE-OUT-L;F1-LOWER-OUT-R;F1-NOSE-OUT-R,Nominal CAD centreline lengths; final cuts require trim/jig review
-RHS,40x60,3,P,2,3322.0,C2-US-L;C2-US-R,Nominal CAD centreline lengths; final cuts require trim/jig review
-RHS,50x100,3,P,7,8172.0,C2-LS-L;C2-LS-R;C2-FLOOR-1;C2-FLOOR-2;C2-FLOOR-3;C2-FLOOR-4;C2-FLOOR-5,Nominal CAD centreline lengths; final cuts require trim/jig review
-RHS,50x50,3,P,2,2340.0,R3-CRADLE-L;R3-CRADLE-R,Nominal CAD centreline lengths; final cuts require trim/jig review
-RHS,50x60,3,P,2,372.0,R3-REAR-TIE-L;R3-REAR-TIE-R,Nominal CAD centreline lengths; final cuts require trim/jig review
-RHS,50x60,4,P,2,794.1,F1-TOWER-L;F1-TOWER-R,Nominal CAD centreline lengths; final cuts require trim/jig review
-RHS,60x60,4,P,9,9760.0,F1-CROSS-1;F1-CROSS-2;F1-CROSS-3;F1-CROSS-4;R3-CROSS-1;R3-CROSS-2;R3-CROSS-3;R3-CROSS-4;R3-CROSS-5,Nominal CAD centreline lengths; final cuts require trim/jig review
-RHS,60x80,4,P,6,8177.1,I-FRONT-CABIN-LAP-L;I-FRONT-CABIN-LAP-R;F1-RAIL-L;F1-RAIL-R;R3-RAIL-L;R3-RAIL-R,Nominal CAD centreline lengths; final cuts require trim/jig review
+category,section,wall_mm,status,qty,nominal_total_length_mm,release_note
+RHS,40x40,3,P,14,4276.4,Nominal centreline lengths; final trims and weld allowances require jig review
+RHS,40x50,3,P,9,6985.2,Nominal centreline lengths; final trims and weld allowances require jig review
+RHS,40x60,3,P,2,3322.0,Nominal centreline lengths; final trims and weld allowances require jig review
+RHS,50x100,3,P,7,8172.0,Nominal centreline lengths; final trims and weld allowances require jig review
+RHS,50x50,3,P,2,2340.0,Nominal centreline lengths; final trims and weld allowances require jig review
+RHS,50x60,3,P,2,372.0,Nominal centreline lengths; final trims and weld allowances require jig review
+RHS,50x60,4,P,4,3224.1,Nominal centreline lengths; final trims and weld allowances require jig review
+RHS,50x60,4,X,3,2240.0,Nominal centreline lengths; final trims and weld allowances require jig review
+RHS,60x60,4,P,9,9760.0,Nominal centreline lengths; final trims and weld allowances require jig review
+RHS,60x80,4,P,10,15542.1,Nominal centreline lengths; final trims and weld allowances require jig review

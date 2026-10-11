@@ -1,6 +1,6 @@
 # Project 8C C17 chassis design review package
 
-This checkout contains the generated FreeCAD master model, modular structural STEP assemblies, donor reference geometry, constraint audit, and validation records for Project 8C C17.
+This checkout contains the generated FreeCAD master model, a structural-only STEP assembly, a full review assembly with donor references, and donor reference geometry, constraint audit, and validation records for Project 8C C17.
 
 The package is **CONCEPT / DESIGN REVIEW / ENGINEERING HOLD**. It is not released for fabrication or road use. Toyota donor dimensions and all safety-critical mounts remain provisional or measured-item placeholders until C17 gates G01–G11 are closed.
 
@@ -15,3 +15,6 @@ PYTHONHOME=/usr \
 ```
 
 The script requires the supplied STEP references under `references/` and writes all generated files to `deliverables/`. The master FCStd tree is organized into parameters, body reference, hardpoints, donor references, front/cabin/rear weldments, global interfaces, occupants, body mounts, analysis, fabrication, and exports.
+
+
+`Project_8C_Structural_Chassis_Assembly.step` is the weldment-only export. `Project_8C_Master_Chassis_Assembly.step` is the full review assembly with the supplied C11, C18, Probox, body, and wheel reference geometry.

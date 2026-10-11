@@ -3,9 +3,10 @@ Revision: C17 Rev 0 / generated 2026-10-11
 STATUS: CONCEPT / DESIGN REVIEW / ENGINEERING HOLD
 
 Architecture
-- Continuous paired primary rails run from the rear bay through deep cabin sills into the GX100 front cradle.
-- Cabin floor crossmembers and shared X-02 overlap members create a common load path across X=2375..2551.
-- Rear Probox cassette is represented by a replaceable cradle with 1:1 donor envelope proxies and measured-point placeholders.
+- Continuous paired primary rails run from the rear bay through deep cabin sills into the GX100 front cradle, with second-level diagonal load paths and explicit tower ties.
+- Cabin floor crossmembers, a provisional shear panel, side-door diagonals and shared X-02 overlap members make the open-top torsion strategy explicit.
+- The supplied 108-solid C18 front reference, 199-solid Probox reference and 21-solid C11 cabin reference are retained at their supplied global positions in the review assembly.
+- Rear Probox packaging is represented by a replaceable RHS cradle around the actual donor envelope, with four measured-point placeholders and a removable service opening.
 - Firewall at X=950 and cockpit aft edge X=889.83 remain the visible X-01 conflict pending thermal, seat, and service packaging.
 
 Fixed / derived parameters

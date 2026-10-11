@@ -1,0 +1,199 @@
+# -*- coding: utf-8 -*-
+# Project 8C - Parametric Body Envelope Starter
+# Opens in FreeCAD (tested conceptually for FreeCAD 1.0+; run as a macro).
+# Creates an editable, station-driven body envelope with cockpit and wheel-opening
+# cuts as a DIMENSIONAL STARTER MODEL, not fabrication-released geometry.
+#
+# IMPORTANT:
+#  - Dimensions below are provisional design targets, not measured donor data.
+#  - This model does not claim faithful historical dimensions or validated fit.
+#  - Update station dimensions and hard points from actual Probox measurements.
+#  - Review the generated geometry in FreeCAD and run Part > Check geometry.
+#
+# Units: millimetres. Longitudinal X; vehicle centreline Y=0; vertical Z.
+import FreeCAD as App
+import Part
+import math
+
+DOC_NAME = "Project8C_Body_Starter"
+
+# ---- Master parameters (mm) ----
+WHEELBASE = 3000.0             # provisional only; replace after layout decision
+BODY_LENGTH = 5150.0           # provisional only
+BODY_MAX_WIDTH = 1770.0        # provisional only
+BODY_MAX_HEIGHT = 1500.0       # provisional only
+GROUND_Z = 0.0
+BODY_BOTTOM_Z = 250.0
+COWL_TOP_Z = 1120.0
+REAR_DECK_Z = 920.0
+BONNET_TOP_Z = 900.0
+FRONT_AXLE_X = 1050.0
+REAR_AXLE_X = FRONT_AXLE_X + WHEELBASE
+TYRE_RADIUS = 330.0            # provisional; measure donor tyre OD
+TYRE_WIDTH = 205.0              # provisional; measure donor tyre width
+WHEEL_ARCH_CLEARANCE = 45.0
+COCKPIT_X0 = 1900.0
+COCKPIT_X1 = 3300.0
+COCKPIT_HALF_WIDTH = 600.0
+COCKPIT_FRONT_Z = 1050.0
+COCKPIT_REAR_Z = 1030.0
+
+# Station format: (X, half_width, bottom_z, shoulder_z, crown_z, crown_shape_factor)
+# Shape factor controls how full/flat the top shoulder is. These are intentionally
+# smooth concept proportions; they must be tuned against reference views and packaging.
+STATIONS = [
+    (0,    80,  430,  490,  520, 0.90),
+    (180,  250, 360,  570,  630, 0.88),
+    (420,  390, 300,  650,  735, 0.86),
+    (700,  470, 270,  700,  810, 0.84),
+    (1000, 520, 250,  720,  875, 0.82),
+    (1300, 545, 250,  730,  900, 0.82),
+    (1600, 555, 255,  750,  930, 0.82),
+    (1900, 575, 260,  790,  1050,0.82),
+    (2200, 590, 260,  820,  1120,0.82),
+    (2500, 600, 260,  830,  1140,0.82),
+    (2800, 600, 260,  830,  1140,0.82),
+    (3100, 600, 260,  820,  1110,0.82),
+    (3400, 590, 260,  800,  1040,0.82),
+    (3700, 575, 265,  780,  980, 0.82),
+    (4000, 550, 270,  750,  940, 0.83),
+    (4300, 510, 285,  710,  910, 0.84),
+    (4600, 440, 310,  670,  880, 0.86),
+    (4850, 340, 350,  620,  840, 0.88),
+    (5050, 220, 400,  570,  790, 0.90),
+    (5150,  60,  470,  520,  700, 0.92),
+]
+
+def reset_doc():
+    old = App.getDocument(DOC_NAME)
+    if old:
+        App.closeDocument(DOC_NAME)
+    return App.newDocument(DOC_NAME)
+
+def interp(a, b, t):
+    return a + (b-a)*t
+
+def station_wire(st):
+    x, hw, zbot, zshoulder, ztop, factor = st
+    # A closed rounded transverse profile. Start at centre-bottom and travel
+    # around the left side, over crown, and down the right side.
+    pts = []
+    # bottom centre -> lower side -> shoulder -> crown -> opposite shoulder -> bottom
+    # Parametric profile avoids an abrupt polygonal section; B-spline interpolation
+    # smooths the section through controlled points.
+    pts.append(App.Vector(x, 0, zbot))
+    # left side lower and mid points
+    pts.append(App.Vector(x, -hw*0.72, zbot + (zshoulder-zbot)*0.10))
+    pts.append(App.Vector(x, -hw*0.96, zbot + (zshoulder-zbot)*0.45))
+    pts.append(App.Vector(x, -hw, zshoulder))
+    pts.append(App.Vector(x, -hw*0.92, zshoulder + (ztop-zshoulder)*0.42))
+    pts.append(App.Vector(x, -hw*0.65, zshoulder + (ztop-zshoulder)*0.78))
+    pts.append(App.Vector(x, -hw*0.30, zshoulder + (ztop-zshoulder)*factor))
+    pts.append(App.Vector(x, 0, ztop))
+    pts.append(App.Vector(x, hw*0.30, zshoulder + (ztop-zshoulder)*factor))
+    pts.append(App.Vector(x, hw*0.65, zshoulder + (ztop-zshoulder)*0.78))
+    pts.append(App.Vector(x, hw*0.92, zshoulder + (ztop-zshoulder)*0.42))
+    pts.append(App.Vector(x, hw, zshoulder))
+    pts.append(App.Vector(x, hw*0.96, zbot + (zshoulder-zbot)*0.45))
+    pts.append(App.Vector(x, hw*0.72, zbot + (zshoulder-zbot)*0.10))
+    pts.append(App.Vector(x, 0, zbot))
+    curve = Part.BSplineCurve()
+    curve.interpolate(pts, False)
+    return Part.Wire(curve.toShape())
+
+doc = reset_doc()
+wires = [station_wire(s) for s in STATIONS]
+
+# Smooth loft of the complete outer envelope.
+loft = Part.makeLoft(wires, True, False)
+body_obj = doc.addObject("PartDesign::Feature", "BodyEnvelope")
+body_obj.Label = "Body Envelope - station loft (provisional)"
+body_obj.Shape = loft
+body_obj.addProperty("App::PropertyLength", "BodyLength", "Master Parameters")
+body_obj.BodyLength = BODY_LENGTH
+body_obj.addProperty("App::PropertyLength", "MaxWidth", "Master Parameters")
+body_obj.MaxWidth = BODY_MAX_WIDTH
+body_obj.addProperty("App::PropertyLength", "MaxHeight", "Master Parameters")
+body_obj.MaxHeight = BODY_MAX_HEIGHT
+body_obj.addProperty("App::PropertyString", "Status", "Design Status")
+body_obj.Status = "Concept envelope only; donor fit and surfaces unvalidated"
+
+# Cockpit opening: tapered lofted cutter approximated by two nested rectangular
+# sections; keep this as an editable feature so opening dimensions can be changed.
+def rect_wire(x, half_w, z_low, z_high):
+    pts = [
+        App.Vector(x, -half_w, z_low),
+        App.Vector(x,  half_w, z_low),
+        App.Vector(x,  half_w, z_high),
+        App.Vector(x, -half_w, z_high),
+        App.Vector(x, -half_w, z_low),
+    ]
+    return Part.makePolygon(pts)
+
+cockpit_cutter = Part.makeBox(
+    COCKPIT_X1-COCKPIT_X0, COCKPIT_HALF_WIDTH*2, 1000,
+    App.Vector(COCKPIT_X0, -COCKPIT_HALF_WIDTH, COCKPIT_FRONT_Z)
+)
+# Box removes the cockpit opening above the selected cowl/deck threshold.
+with_cockpit = loft.cut(cockpit_cutter)
+
+# Wheel arches: cylinders cut along Y. Their centres are above ground by tyre radius
+# plus chosen clearance. Cut only the body envelope, not chassis or wheel objects.
+arch_r = TYRE_RADIUS + WHEEL_ARCH_CLEARANCE
+wheel_cutters = []
+for ax, label in [(FRONT_AXLE_X, "Front"), (REAR_AXLE_X, "Rear")]:
+    # Cylinder axis along Y, long enough to pass through both sides.
+    cyl = Part.makeCylinder(arch_r, BODY_MAX_WIDTH+300,
+                           App.Vector(ax, -(BODY_MAX_WIDTH+300)/2, TYRE_RADIUS+GROUND_Z),
+                           App.Vector(0,1,0))
+    wheel_cutters.append(cyl)
+    with_cockpit = with_cockpit.cut(cyl)
+
+# The result is a concept solid. Separate objects preserve intermediate features.
+cut_obj = doc.addObject("PartDesign::Feature", "BodyWithOpenings")
+cut_obj.Label = "Body Envelope - cockpit and wheel openings"
+cut_obj.Shape = with_cockpit
+cut_obj.addProperty("App::PropertyLength", "CockpitLength", "Master Parameters")
+cut_obj.CockpitLength = COCKPIT_X1-COCKPIT_X0
+cut_obj.addProperty("App::PropertyLength", "CockpitHalfWidth", "Master Parameters")
+cut_obj.CockpitHalfWidth = COCKPIT_HALF_WIDTH
+cut_obj.addProperty("App::PropertyLength", "WheelArchRadius", "Master Parameters")
+cut_obj.WheelArchRadius = arch_r
+cut_obj.addProperty("App::PropertyString", "Status", "Design Status")
+cut_obj.Status = "Concept geometry; refine cockpit, bonnet, fenders and panel boundaries"
+
+# Show station wires for editability/reference.
+station_group = doc.addObject("App::DocumentObjectGroup", "BodyStations")
+station_group.Label = "Editable body station sections"
+for i, w in enumerate(wires):
+    o = doc.addObject("PartDesign::Feature", "Station_%02d" % i)
+    o.Label = "Station %02d - X %.0f mm" % (i, STATIONS[i][0])
+    o.Shape = w
+    station_group.addObject(o)
+    o.ViewObject.Visibility = False
+
+# Visual settings.
+body_obj.ViewObject.ShapeColor = (0.78, 0.78, 0.82)
+body_obj.ViewObject.Transparency = 88
+body_obj.ViewObject.Visibility = False
+cut_obj.ViewObject.ShapeColor = (0.72, 0.75, 0.80)
+cut_obj.ViewObject.LineColor = (0.15, 0.18, 0.22)
+cut_obj.ViewObject.DisplayMode = "Flat Lines"
+cut_obj.ViewObject.Visibility = True
+
+doc.recompute()
+Gui.activeDocument().activeView().viewAxonometric()
+Gui.activeDocument().activeView().fitAll()
+
+# Save the editable FreeCAD document beside this macro if the macro has a path;
+# otherwise save to the user's home directory.
+try:
+    import os
+    macro_dir = os.path.dirname(__file__)
+except:
+    macro_dir = os.path.expanduser("~")
+save_path = os.path.join(macro_dir, "Project_8C_Body_Starter.FCStd")
+doc.recompute()
+doc.saveAs(save_path)
+print("Project 8C body starter created: " + save_path)
+print("IMPORTANT: provisional envelope only; verify geometry and all dimensions before use.")

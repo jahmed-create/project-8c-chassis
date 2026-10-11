@@ -36,7 +36,7 @@ def color(o,c,t=0):
     try: o.ViewObject.ShapeColor=c; o.ViewObject.Transparency=t
     except Exception: pass
 
-g_params=group('G00_Parameters','00 Parameters & Revisions'); g_body=group('G01_BodyReference','01 Body Reference'); g_hp=group('G02_HardpointSkeleton','02 Hardpoint Skeleton'); g_donor_front=group('G03_DonorFrontGX100','03 Donor Front GX100 (provisional)'); g_donor_rear=group('G04_DonorRearProbox','04 Donor Rear Probox (provisional)'); g_front=group('G05_Front','05 Chassis 01 Front'); g_cabin=group('G06_Cabin','06 Chassis 02 Cabin'); g_rear=group('G07_Rear','07 Chassis 03 Rear'); g_int=group('G08_Interfaces','08 Interfaces Global'); g_seats=group('G09_Occupants','09 Seats Controls Belts'); g_bodymount=group('G10_BodyMounts','10 Body Mounts and Fluid Routing'); g_analysis=group('G11_Analysis','11 Analysis'); g_fab=group('G12_Fabrication','12 Fabrication'); g_exports=group('G13_Exports','13 Exports')
+g_params=group('G00_Parameters','00 Parameters & Revisions'); g_body=group('G01_BodyReference','01 Body Reference'); g_hp=group('G02_HardpointSkeleton','02 Hardpoint Skeleton'); g_donor_front=group('G03_DonorFrontGX100','03 Donor Front GX100 (provisional)'); g_donor_rear=group('G04_DonorRearProbox','04 Donor Rear Probox (provisional)'); g_front=group('G05_Front','05 Chassis 01 Front'); g_cabin=group('G06_Cabin','06 Chassis 02 Cabin'); g_rear=group('G07_Rear','07 Chassis 03 Rear'); g_int=group('G08_Interfaces','08 Interfaces Global'); g_seats=group('G09_Occupants','09 Seats Controls Belts'); g_bodymount=group('G10_BodyMounts','10 Body Mounts and Fluid Routing'); g_analysis=group('G11_Analysis','11 Analysis'); g_fab=group('G12_Fabrication','12 Fabrication'); g_exports=group('G13_Exports','13 Exports'); g_wheels=group('G14_Wheels','14 Wheel and Tyre Study')
 param=doc.addObject('App::FeaturePython','MasterParameters'); param.Label='C17 Master Parameters (design review)'
 for n,v,s in [('Scale',SCALE,'F'),('BodyLength',BODY_L,'D'),('BodyWidth',2100,'F'),('Wheelbase',WB,'D'),('RearAxleX',0,'F'),('FrontAxleX',FRONT_X,'D'),('FrontTrackStudy',1550,'P'),('RearTrackReference',1455,'P'),('FrontWheelZ',330,'P'),('CabinAftX',889.83,'P'),('LegacyFirewallX',950,'X'),('FrontFrameStartX',2375,'P'),('CabinFrontX',2550.85,'P'),('RearModuleMinX',-791,'P'),('RearModuleMaxX',950,'P')]:
     add_prop(param,'App::PropertyLength',n,v,'C17 Parameters'); add_prop(param,'App::PropertyString',n+'_Status',s,'C17 Status')
@@ -47,6 +47,22 @@ wires=[]
 for x,w,zb,zc in stations: wires.append(Part.makePolygon([App.Vector(x,-w/2,zb),App.Vector(x,w/2,zb),App.Vector(x,w/2,zc),App.Vector(x,-w/2,zc),App.Vector(x,-w/2,zb)]))
 body=feature(g_body,'CentralShell_StationLoft',Part.makeLoft(wires,True,False),'P','C10 scaled station CSV','REF-BODY-SHELL','Central shell only; validated 2100 mm fenders unavailable'); color(body,(0.35,0.65,0.85),88)
 target=feature(g_body,'BodyTargetEnvelope_2100mm',Part.makeBox(BODY_L,2100,1780,App.Vector(BODY_REAR,-1050,0)),'F','C17 overall body target','REF-BODY-TARGET','Envelope only; no exterior fender skin'); color(target,(0.15,0.35,0.65),96)
+# Full scaled 8C starter envelope.  This is a body reference surface, not a
+# claim that the historical skin or 2100 mm fender CAD has been validated.
+body_macro=[(0,80,430,490,520,0.90),(180,250,360,570,630,0.88),(420,390,300,650,735,0.86),(700,470,270,700,810,0.84),(1000,520,250,720,875,0.82),(1300,545,250,730,900,0.82),(1600,555,255,750,930,0.82),(1900,575,260,790,1050,0.82),(2200,590,260,820,1120,0.82),(2500,600,260,830,1140,0.82),(2800,600,260,830,1140,0.82),(3100,600,260,820,1110,0.82),(3400,590,260,800,1040,0.82),(3700,575,265,780,980,0.82),(4000,550,270,750,940,0.83),(4300,510,285,710,910,0.84),(4600,440,310,670,880,0.86),(4850,340,350,620,840,0.88),(5050,220,400,570,790,0.90),(5150,60,470,520,700,0.92)]
+body_wires=[]
+for s,hw,zbot,zshoulder,ztop,factor in body_macro:
+    x=(4050.0-s)*SCALE; hw*=SCALE; zbot*=SCALE; zshoulder*=SCALE; ztop*=SCALE
+    pts=[App.Vector(x,0,zbot),App.Vector(x,-hw*.72,zbot+(zshoulder-zbot)*.10),App.Vector(x,-hw*.96,zbot+(zshoulder-zbot)*.45),App.Vector(x,-hw,zshoulder),App.Vector(x,-hw*.92,zshoulder+(ztop-zshoulder)*.42),App.Vector(x,-hw*.65,zshoulder+(ztop-zshoulder)*.78),App.Vector(x,-hw*.30,zshoulder+(ztop-zshoulder)*factor),App.Vector(x,0,ztop),App.Vector(x,hw*.30,zshoulder+(ztop-zshoulder)*factor),App.Vector(x,hw*.65,zshoulder+(ztop-zshoulder)*.78),App.Vector(x,hw*.92,zshoulder+(ztop-zshoulder)*.42),App.Vector(x,hw,zshoulder),App.Vector(x,hw*.96,zbot+(zshoulder-zbot)*.45),App.Vector(x,hw*.72,zbot+(zshoulder-zbot)*.10),App.Vector(x,0,zbot)]
+    c=Part.BSplineCurve(); c.interpolate(pts,False); body_wires.append(Part.Wire(c.toShape()))
+body_full_shape=Part.makeLoft(body_wires,True,False)
+body_full=feature(g_body,'BodyScaledFullEnvelope',body_full_shape,'P','C03/C10 scaled body starter macro','REF-BODY-FULL','Uniformly scaled concept envelope; fenders and panel boundaries are not validated'); color(body_full,(0.25,0.55,0.85),90)
+cockpit_cut=Part.makeBox(2550.85-889.83,1423.73,1200,App.Vector(889.83,-711.865,980))
+arch_r=(330.0+45.0)*SCALE
+for ax in [0.0,FRONT_X]:
+    cockpit_cut=cockpit_cut.fuse(Part.makeCylinder(arch_r,2500,App.Vector(ax,-1250,330.0*SCALE),App.Vector(0,1,0)))
+body_open_shape=body_full_shape.cut(cockpit_cut)
+body_open=feature(g_body,'BodyScaledWithCockpitAndArchStudy',body_open_shape,'P','C17 scaled body conflict study','REF-BODY-OPENINGS','Cockpit and wheel-arch cuts are provisional; X-03 remains unresolved'); color(body_open,(0.30,0.60,0.90),92)
 # hardpoints
 hardpoints=[('HP-REAR-AXLE',0,0,330,'F','C17 master datum'),('HP-FRONT-WHEEL-L',FRONT_X,775,330,'P','C17 front track study'),('HP-FRONT-WHEEL-R',FRONT_X,-775,330,'P','C17 front track study'),('HP-GX-L1-L',3350,425,295,'P','C16 proxy'),('HP-GX-L1-R',3350,-425,295,'P','C16 proxy'),('HP-GX-L2-L',3760,425,295,'P','C16 proxy'),('HP-GX-L2-R',3760,-425,295,'P','C16 proxy'),('HP-GX-SH-L',3490,515,825,'P','C16 proxy'),('HP-GX-SH-R',3490,-515,825,'P','C16 proxy'),('HP-PROBOX-HUB-L',0,727.5,330,'P','Probox reference track'),('HP-PROBOX-HUB-R',0,-727.5,330,'P','Probox reference track'),('HP-FIREWALL-LEGACY',950,0,650,'X','C17 X-01 conflict'),('HP-CABIN-AFT',889.83,0,650,'X','C17 X-01 conflict')]
 for n,x,y,z,s,src in hardpoints:
@@ -56,6 +72,18 @@ donor_front_shape=Part.read(str(ROOT/'references/Project_8C_C18_Combined_Front_C
 donor_front=feature(g_donor_front,'D-FRONT-C18-Supplied-STEP',donor_front_shape,'P','Supplied C18 STEP reference','DONOR-C18-FRONT','Reference geometry only; not verified GX100 interface or road-rated structure'); color(donor_front,(0.95,0.75,0.15),82)
 donor_rear_shape=Part.read(str(ROOT/'references/Project_8C_Probox_Donor_Cassette_Concept_Rev01.step'))
 donor_rear=feature(g_donor_rear,'D-REAR-Probox-Supplied-STEP',donor_rear_shape,'P','Supplied Probox Rev01 STEP reference','DONOR-PROBOX-REV01','199-solid visual cassette; donor VIN, mounts, drivetrain and service geometry unverified'); color(donor_rear,(0.85,0.55,0.20),84)
+# Keep the earlier C11 cabin study visible as a quarantined reference so that
+# the new weldment can be compared against the source rather than silently
+# replacing it.
+c11_shape=Part.read(str(ROOT/'references/Project_8C_C11_Cabin_RHS_Frame_Concept.step'))
+c11_ref=feature(g_body,'D-CABIN-C11-Supplied-STEP',c11_shape,'P','Supplied C11 cabin STEP reference','DONOR-C11-CABIN','Spatial reference only; no seat, door, belt, firewall or rollover design'); color(c11_ref,(0.25,0.75,0.95),93)
+# Wheel and tyre envelopes are kept as separate study solids.  They are not
+# wheel designs or clearance approval.
+def wheel_env(name,x,y,z,r,w,src,status='P'):
+    sh=Part.makeCylinder(r,w,App.Vector(x,y-w/2,z),App.Vector(0,1,0))
+    o=feature(g_wheels,name,sh,status,src,name,'Envelope only; wheel offset, WMS, tyre load and fender sweep require confirmation'); color(o,(0.15,0.15,0.15),72); return o
+front_wheels=[wheel_env('W-FRONT-L',FRONT_X,775,330,330,215,'C17 C14 trial tyre'),wheel_env('W-FRONT-R',FRONT_X,-775,330,330,215,'C17 C14 trial tyre')]
+rear_wheels=[wheel_env('W-REAR-L',0,727.5,330,317,165,'Probox Rev01 165R13-style reference'),wheel_env('W-REAR-R',0,-727.5,330,317,165,'Probox Rev01 165R13-style reference')]
 member_rows=[]
 def member(grp,n,p0,p1,sy,sz,wall,status,source,notes,section='RHS'):
     o=feature(grp,n,tube(p0,p1,sy,sz,wall),status,source,n,notes); add_prop(o,'App::PropertyLength','OuterY',sy,'RHS'); add_prop(o,'App::PropertyLength','OuterZ',sz,'RHS'); add_prop(o,'App::PropertyLength','Wall',wall,'RHS'); add_prop(o,'App::PropertyString','StartNode',str(tuple(round(v,2) for v in p0)),'RHS'); add_prop(o,'App::PropertyString','EndNode',str(tuple(round(v,2) for v in p1)),'RHS'); add_prop(o,'App::PropertyString','Section',section,'RHS'); color(o,(0.72,0.72,0.75))
@@ -65,6 +93,11 @@ for side,y in [('L',510),('R',-510)]:
     member(g_cabin,f'C2-LS-{side}',(890,y,445),(2551,y,445),50,100,3,'P','C11 member schedule','Primary sill'); member(g_cabin,f'C2-US-{side}',(890,y,675),(2551,y,675),40,60,3,'P','C11 member schedule','Upper door rail')
     for i,x in enumerate([915,1240,1630,2010,2526],1): member(g_cabin,f'C2-SIDE-{side}-{i}',(x,y,545),(x,y,675),40,40,3,'P','C11 member schedule','Sill connector')
 for i,x in enumerate([915,1240,1630,2010,2526],1): member(g_cabin,f'C2-FLOOR-{i}',(x,-485,445),(x,485,445),50,100,3,'P','C11 member schedule','Floor diaphragm')
+# Thin floor/shear panels are reference solids, not a released sheet-metal
+# drawing.  They make the open-top cabin's torsion strategy explicit.
+floor=feature(g_cabin,'C2-Floor-Shear-Panel',Part.makeBox(1610,970,3,App.Vector(920,-485,545)),'P','C17 torsion concept','C2-FLOOR-SHEET','Panel gauge, weld/bond detail and removable service access require engineering'); color(floor,(0.35,0.45,0.55),55)
+for side,y in [('L',510),('R',-510)]:
+    member(g_cabin,f'C2-DOOR-DIAG-{side}',(1050,y,545),(2200,y,675),40,40,3,'P','C17 side intrusion concept','Door opening diagonal; door hardware and ingress study pending')
 member(g_int,'I-FRONT-CABIN-LAP-L',(2375,510,445),(2551,510,445),60,80,4,'P','C17 architecture','Continuous rail across 176 mm overlap'); member(g_int,'I-FRONT-CABIN-LAP-R',(2375,-510,445),(2551,-510,445),60,80,4,'P','C17 architecture','Continuous rail across 176 mm overlap'); member(g_int,'I-FRONT-CABIN-XBRACE-L',(2375,510,445),(2551,350,675),40,40,3,'P','C17 architecture','Triangulated splice'); member(g_int,'I-FRONT-CABIN-XBRACE-R',(2375,-510,445),(2551,-350,675),40,40,3,'P','C17 architecture','Triangulated splice')
 # front
 for side,y in [('L',520),('R',-520)]:
@@ -76,6 +109,24 @@ for side,sgn in [('L',1),('R',-1)]:
 # rear
 for side,y in [('L',560),('R',-560)]: member(g_rear,f'R3-RAIL-{side}',(-791,y,390),(950,y,445),60,80,4,'P','C17 architecture','Rear primary rail'); member(g_rear,f'R3-CRADLE-{side}',(-650,y,260),(520,y,260),50,50,3,'P','Probox cassette concept','Cradle rail; interface M'); member(g_rear,f'R3-REAR-TIE-{side}',(-791,y,390),(-791,410 if y>0 else -410,500),50,60,3,'P','C17 architecture','Rear body support')
 for i,x in enumerate([-650,-520,0,520,800],1): member(g_rear,f'R3-CROSS-{i}',(x,-560,390),(x,560,390),60,60,4,'P','C17 architecture','Rear transverse path')
+# Second-level triangulation and service cradle rails.  These members make the
+# load path visually continuous while preserving the measured-point HOLD on
+# every donor interface.
+for side,y0,y1 in [('L',650,510),('R',-650,-510)]:
+    member(g_int,f'I-CONT-RAIL-{side}-REAR',(-791,y0,390),(890,y1,445),60,80,4,'P','C17 integrated load path','Rear-to-cabin continuous rail; final node review required')
+    member(g_int,f'I-CONT-RAIL-{side}-FRONT',(2551,y1,445),(4545,520 if side=='L' else -520,500),60,80,4,'P','C17 integrated load path','Cabin-to-front continuous rail; final node review required')
+    member(g_int,f'I-REAR-DIAG-{side}',(-520,y0,390),(520,y1,260),40,50,3,'P','C17 rear cradle concept','Rear cradle diagonal; removable cassette load path')
+    member(g_int,f'I-FRONT-DIAG-{side}',(2551,y1,445),(3350,425 if side=='L' else -425,295),40,50,3,'P','C17 front cradle concept','Front suspension load path; donor axes unverified')
+# Cross-vehicle load ties at the suspension tower and rear service bay.
+member(g_front,'F1-SHOCK-TOWER-TIE',(3490,-515,825),(3490,515,825),50,60,4,'P','C16 coilover proxy','Upper tower tie; damper and tower loads require engineering')
+member(g_rear,'R3-STRUT-TOP-TIE',(420,-700,900),(420,700,900),50,60,4,'P','Probox Rev01 strut envelope','Strut-top tie proxy; actual top mounts are M')
+member(g_rear,'R3-REAR-SERVICE-CROSS',(-650,-650,650),(650,650,650),40,50,3,'P','C17 service architecture','Engine removal opening boundary; clearances unverified')
+# Candidate bulkhead/hoop members are deliberately marked provisional because
+# the X=889.83 / 950 firewall conflict is unresolved.
+for side in ['L','R']:
+    y=560 if side=='L' else -560
+    member(g_int,f'I-BULKHEAD-HOOP-{side}',(920,y,390),(920,y,950),50,60,4,'X','C17 X-01 conflict','Candidate thermal/fire bulkhead hoop; do not freeze')
+member(g_int,'I-BULKHEAD-TOP',(920,-560,950),(920,560,950),50,60,4,'X','C17 X-01 conflict','Candidate bulkhead top tie; cockpit and engine package unresolved')
 engine=feature(g_rear,'R3-Probox-Powertrain-Envelope',Part.makeBox(1100,850,750,App.Vector(-450,-425,225)),'P','Probox Rev01 research basis','DONOR-PROBOX-POWERTRAIN','Visual package only; orientation/mount/service unverified'); color(engine,(0.75,0.35,0.25),82)
 subframe=feature(g_rear,'R3-Probox-Subframe-Proxy',Part.makeBox(1040,100,50,App.Vector(-520,-610,200)).fuse(Part.makeBox(100,1120,50,App.Vector(-570,-560,200))),'M','Probox Rev01 assumption','DONOR-PROBOX-SUBFRAME','Nominal cassette; actual stamping and bolts require survey'); color(subframe,(0.9,0.5,0.15),50)
 for i,(x,y) in enumerate([(-520,560),(-520,-560),(520,560),(520,-560)],1):
@@ -91,11 +142,11 @@ for i,(x,y) in enumerate([(1100,510),(1100,-510),(2450,510),(2450,-510)],1):
     o=feature(g_bodymount,f'BM-{i}',marker((x,y,430),12,25),'P','Body mount concept','BODY-MOUNT','Composite-body isolation mount; skin unverified'); color(o,(0.2,0.7,0.9))
 load=feature(g_analysis,'A-LoadPath-Reference',Part.makePolygon([App.Vector(-791,0,430),App.Vector(950,0,430),App.Vector(2551,0,445),App.Vector(4545,0,500)]),'E','C17 analysis requirement','ANALYSIS-LOADPATH','Schematic only; no FEA'); color(load,(1.0,0.1,0.1))
 # save/export
-front_objs=[o for o in g_front.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; cabin_objs=[o for o in g_cabin.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; rear_objs=[o for o in g_rear.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; int_objs=[o for o in g_int.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; all_objs=front_objs+cabin_objs+rear_objs+int_objs
+front_objs=[o for o in g_front.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; cabin_objs=[o for o in g_cabin.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; rear_objs=[o for o in g_rear.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; int_objs=[o for o in g_int.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; structural_objs=front_objs+cabin_objs+rear_objs+int_objs; review_objs=structural_objs+[donor_front,donor_rear,c11_ref,body_open]+front_wheels+rear_wheels
 
 doc.recompute(); doc.saveAs(str(OUT/'Project_8C_Master_Chassis.FCStd'))
-for objs,path in [(front_objs,OUT/'Project_8C_Chassis_01_Front.step'),(cabin_objs,OUT/'Project_8C_Chassis_02_Cabin.step'),(rear_objs,OUT/'Project_8C_Chassis_03_Rear.step'),(all_objs,OUT/'Project_8C_Master_Chassis_Assembly.step')]: Part.export(objs,str(path))
-Part.export([donor_front,donor_rear],str(OUT/'Project_8C_Donor_Proxies_Review.step'))
+for objs,path in [(front_objs,OUT/'Project_8C_Chassis_01_Front.step'),(cabin_objs,OUT/'Project_8C_Chassis_02_Cabin.step'),(rear_objs,OUT/'Project_8C_Chassis_03_Rear.step'),(structural_objs,OUT/'Project_8C_Structural_Chassis_Assembly.step'),(review_objs,OUT/'Project_8C_Master_Chassis_Assembly.step')]: Part.export(objs,str(path))
+Part.export([donor_front,donor_rear,c11_ref],str(OUT/'Project_8C_Donor_Proxies_Review.step'))
 with open(OUT/'Project_8C_Datum_and_Hardpoint_Registry.csv','w',newline='') as f:
     w=csv.writer(f); w.writerow(['id','x_mm','y_mm','z_mm','status','source','notes']); [w.writerow(list(r)+['Marker only']) for r in hardpoints]
 registry=ROOT/'references/Project_8C_C17_Hardpoint_Registry.csv'
@@ -112,9 +163,9 @@ def bb(objs):
     b=None
     for o in objs: b=o.Shape.BoundBox if b is None else b.united(o.Shape.BoundBox)
     return None if b is None else [round(v,3) for v in (b.XMin,b.XMax,b.YMin,b.YMax,b.ZMin,b.ZMax)]
-checks={'units':'mm','coordinate_system':'+X front, +Y vehicle-left, +Z up; rear axle origin','fcstd_exists':(OUT/'Project_8C_Master_Chassis.FCStd').exists(),'step_files':[p.name for p in OUT.glob('*.step')],'module_counts':{'front':len(front_objs),'cabin':len(cabin_objs),'rear':len(rear_objs),'interfaces':len(int_objs)},'bbox_mm':{'front':bb(front_objs),'cabin':bb(cabin_objs),'rear':bb(rear_objs),'assembly':bb(all_objs)},'axis_check':True,'scale_check':abs(SCALE-2100/1770)<1e-12,'release_state':'CONCEPT / DESIGN REVIEW / ENGINEERING HOLD','unverified_gates':['G01','G02','G03','G04','G05','G06','G07','G08','G09','G10','G11']}
+checks={'units':'mm','coordinate_system':'+X front, +Y vehicle-left, +Z up; rear axle origin','fcstd_exists':(OUT/'Project_8C_Master_Chassis.FCStd').exists(),'step_files':[p.name for p in OUT.glob('*.step')],'module_counts':{'front':len(front_objs),'cabin':len(cabin_objs),'rear':len(rear_objs),'interfaces':len(int_objs),'structural':len(structural_objs),'review_assembly':len(review_objs)},'bbox_mm':{'front':bb(front_objs),'cabin':bb(cabin_objs),'rear':bb(rear_objs),'structural_assembly':bb(structural_objs),'review_assembly':bb(review_objs)},'axis_check':True,'scale_check':abs(SCALE-2100/1770)<1e-12,'release_state':'CONCEPT / DESIGN REVIEW / ENGINEERING HOLD','unverified_gates':['G01','G02','G03','G04','G05','G06','G07','G08','G09','G10','G11']}
 with open(OUT/'Project_8C_Design_Validation.json','w') as f: json.dump(checks,f,indent=2)
-report=f'''Project 8C C17 integrated chassis design review\nRevision: C17 Rev 0 / generated 2026-10-11\nSTATUS: CONCEPT / DESIGN REVIEW / ENGINEERING HOLD\n\nArchitecture\n- Continuous paired primary rails run from the rear bay through deep cabin sills into the GX100 front cradle.\n- Cabin floor crossmembers and shared X-02 overlap members create a common load path across X=2375..2551.\n- Rear Probox cassette is represented by a replaceable cradle with 1:1 donor envelope proxies and measured-point placeholders.\n- Firewall at X=950 and cockpit aft edge X=889.83 remain the visible X-01 conflict pending thermal, seat, and service packaging.\n\nFixed / derived parameters\n- Body width 2100 mm (F); body length {BODY_L:.2f} mm (D); wheelbase {WB:.2f} mm (D).\n- Rear axle X=0 (F); front axle X={FRONT_X:.2f} (D); +X front, +Y vehicle-left, +Z up.\n- Toyota donor geometry is not scaled; donor interfaces are P/M proxies.\n\nDesign assessment\n- C11 is retained as a spatial reference and strengthened with 60x80x4 lap rails and diagonal splice members.\n- C16 front study is reorganized into paired continuous rails, four crossmembers, wheel outriggers, and proxy tower load paths.\n- Probox Rev01 is retained as a packaging reference; rear-drive transaxle feasibility, mounts, axle geometry, lubrication, cooling, and service removal remain unresolved.\n- Scaled central shell station loft is reference geometry only; validated fenders are absent and wheel/arch conflict X-03 remains open.\n\nEngineering limitations\n- No donor drilling, weld specification, material certificate, fatigue result, FEA, kinematics solution, brake calculation, restraint calculation, or legal approval is asserted.\n- Bracket drilling schedule is a HOLD. Fabrication requires closure of C17 gates G01-G11 and independent competent review.\n'''
+report=f'''Project 8C C17 integrated chassis design review\nRevision: C17 Rev 0 / generated 2026-10-11\nSTATUS: CONCEPT / DESIGN REVIEW / ENGINEERING HOLD\n\nArchitecture\n- Continuous paired primary rails run from the rear bay through deep cabin sills into the GX100 front cradle, with second-level diagonal load paths and explicit tower ties.\n- Cabin floor crossmembers, a provisional shear panel, side-door diagonals and shared X-02 overlap members make the open-top torsion strategy explicit.\n- The supplied 108-solid C18 front reference, 199-solid Probox reference and 21-solid C11 cabin reference are retained at their supplied global positions in the review assembly.\n- Rear Probox packaging is represented by a replaceable RHS cradle around the actual donor envelope, with four measured-point placeholders and a removable service opening.\n- Firewall at X=950 and cockpit aft edge X=889.83 remain the visible X-01 conflict pending thermal, seat, and service packaging.\n\nFixed / derived parameters\n- Body width 2100 mm (F); body length {BODY_L:.2f} mm (D); wheelbase {WB:.2f} mm (D).\n- Rear axle X=0 (F); front axle X={FRONT_X:.2f} (D); +X front, +Y vehicle-left, +Z up.\n- Toyota donor geometry is not scaled; donor interfaces are P/M proxies.\n\nDesign assessment\n- C11 is retained as a spatial reference and strengthened with 60x80x4 lap rails and diagonal splice members.\n- C16 front study is reorganized into paired continuous rails, four crossmembers, wheel outriggers, and proxy tower load paths.\n- Probox Rev01 is retained as a packaging reference; rear-drive transaxle feasibility, mounts, axle geometry, lubrication, cooling, and service removal remain unresolved.\n- Scaled central shell station loft is reference geometry only; validated fenders are absent and wheel/arch conflict X-03 remains open.\n\nEngineering limitations\n- No donor drilling, weld specification, material certificate, fatigue result, FEA, kinematics solution, brake calculation, restraint calculation, or legal approval is asserted.\n- Bracket drilling schedule is a HOLD. Fabrication requires closure of C17 gates G01-G11 and independent competent review.\n'''
 (OUT/'Project_8C_Engineering_Report.md').write_text(report)
 try:
  import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt; from matplotlib.backends.backend_pdf import PdfPages

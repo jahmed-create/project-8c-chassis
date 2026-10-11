@@ -1,13 +1,18 @@
-# Project 8C generated design validation report
+# Project 8C rebuilt design validation report
 
+**Revision:** C17 rebuilt review pass  
 **Status:** CONCEPT / DESIGN REVIEW / ENGINEERING HOLD
 
-- FreeCAD master: `Project_8C_Master_Chassis.FCStd`, 101 objects, 12 top-level groups, all generated solids valid on reload.
-- Structural exports: front 18 solids, cabin 19 solids, rear 17 solids, interfaces 6 solids; combined structural STEP 60 solids.
-- Donor reference exports: C18 GX100 study and Probox Rev01 study retained in `Project_8C_Donor_Proxies_Review.step`; source counts are 108 and 199 solids respectively.
-- Units and axes: millimetres; +X front, +Y vehicle-left, +Z up; rear axle origin. Bounding boxes and counts are recorded in `Project_8C_Design_Validation.json`.
-- Scale check: body-only `2100/1770` passes; donor solids are imported at 1:1.
-- Geometry check: all generated structural solids and re-imported STEP assemblies are non-null and valid. Intentional contacts and the X-01 conflict planes are separately tagged.
-- Interference/kinematics/FEA: setup references are present, but no clearance approval, suspension kinematics solution, structural FEA, fatigue assessment, brake proof, restraint proof, crash proof, or legal approval has been performed.
+The first proxy-only assembly was rejected as insufficient. This rebuilt package keeps the supplied donor geometry in the review assembly and separates the structural-only export from the full review assembly.
 
-The package is suitable for design review and donor measurement planning. It is not suitable for fabrication release or road use.
+- FreeCAD master: 126 objects, including the C11, C18, and Probox supplied references, 62 named RHS members, wheel/tyre envelopes, body station envelopes, and status metadata. All generated shapes reloaded valid.
+- Structural STEP: 77 valid solids after re-import; this is the weldment-only assembly.
+- Full review STEP: 410 valid solids after re-import; this contains the 108-solid C18 front reference, 199-solid Probox reference, 21-solid C11 reference, scaled body opening study, wheel/tyre envelopes, and structural members at their global positions.
+- Donor review STEP: 328 valid solids after re-import.
+- Units and axes: millimetres; +X front, +Y vehicle-left, +Z up; rear axle origin.
+- Body-only scale: `2100/1770` passes. The full scaled body starter envelope spans X=-1305.08…4805.08; the 2100 mm fender target remains a separate reference constraint.
+- Geometry: all generated and re-imported STEP files are non-null and valid. Structural contacts, body references, and unresolved conflict planes are separately tagged.
+
+The rebuilt architecture adds continuous rear-to-front rails, rear cradle diagonals, front tower ties, a provisional cabin shear panel, door-opening diagonals, a candidate firewall hoop, explicit wheel/tyre envelopes, and a rear service opening. These are design-review geometry, not released cut or weld data.
+
+No suspension kinematics approval, donor interface measurement, drivetrain orientation approval, clearance signoff, FEA, fatigue assessment, brake proof, restraint proof, crash proof, or legal approval has been performed. Gates G01–G11 remain open.

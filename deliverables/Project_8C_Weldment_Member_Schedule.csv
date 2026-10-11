@@ -18,6 +18,8 @@ C2-FLOOR-2,RHS,50,100,3,970.0,P,"(1240, -485, 445)","(1240, 485, 445)",Floor dia
 C2-FLOOR-3,RHS,50,100,3,970.0,P,"(1630, -485, 445)","(1630, 485, 445)",Floor diaphragm
 C2-FLOOR-4,RHS,50,100,3,970.0,P,"(2010, -485, 445)","(2010, 485, 445)",Floor diaphragm
 C2-FLOOR-5,RHS,50,100,3,970.0,P,"(2526, -485, 445)","(2526, 485, 445)",Floor diaphragm
+C2-DOOR-DIAG-L,RHS,40,40,3,1157.32,P,"(1050, 510, 545)","(2200, 510, 675)",Door opening diagonal; door hardware and ingress study pending
+C2-DOOR-DIAG-R,RHS,40,40,3,1157.32,P,"(1050, -510, 545)","(2200, -510, 675)",Door opening diagonal; door hardware and ingress study pending
 I-FRONT-CABIN-LAP-L,RHS,60,80,4,176.0,P,"(2375, 510, 445)","(2551, 510, 445)",Continuous rail across 176 mm overlap
 I-FRONT-CABIN-LAP-R,RHS,60,80,4,176.0,P,"(2375, -510, 445)","(2551, -510, 445)",Continuous rail across 176 mm overlap
 I-FRONT-CABIN-XBRACE-L,RHS,40,40,3,330.87,P,"(2375, 510, 445)","(2551, 350, 675)",Triangulated splice
@@ -45,3 +47,17 @@ R3-CROSS-2,RHS,60,60,4,1120.0,P,"(-520, -560, 390)","(-520, 560, 390)",Rear tran
 R3-CROSS-3,RHS,60,60,4,1120.0,P,"(0, -560, 390)","(0, 560, 390)",Rear transverse path
 R3-CROSS-4,RHS,60,60,4,1120.0,P,"(520, -560, 390)","(520, 560, 390)",Rear transverse path
 R3-CROSS-5,RHS,60,60,4,1120.0,P,"(800, -560, 390)","(800, 560, 390)",Rear transverse path
+I-CONT-RAIL-L-REAR,RHS,60,80,4,1687.72,P,"(-791, 650, 390)","(890, 510, 445)",Rear-to-cabin continuous rail; final node review required
+I-CONT-RAIL-L-FRONT,RHS,60,80,4,1994.78,P,"(2551, 510, 445)","(4545, 520, 500)",Cabin-to-front continuous rail; final node review required
+I-REAR-DIAG-L,RHS,40,50,3,1057.4,P,"(-520, 650, 390)","(520, 510, 260)",Rear cradle diagonal; removable cassette load path
+I-FRONT-DIAG-L,RHS,40,50,3,817.39,P,"(2551, 510, 445)","(3350, 425, 295)",Front suspension load path; donor axes unverified
+I-CONT-RAIL-R-REAR,RHS,60,80,4,1687.72,P,"(-791, -650, 390)","(890, -510, 445)",Rear-to-cabin continuous rail; final node review required
+I-CONT-RAIL-R-FRONT,RHS,60,80,4,1994.78,P,"(2551, -510, 445)","(4545, -520, 500)",Cabin-to-front continuous rail; final node review required
+I-REAR-DIAG-R,RHS,40,50,3,1057.4,P,"(-520, -650, 390)","(520, -510, 260)",Rear cradle diagonal; removable cassette load path
+I-FRONT-DIAG-R,RHS,40,50,3,817.39,P,"(2551, -510, 445)","(3350, -425, 295)",Front suspension load path; donor axes unverified
+F1-SHOCK-TOWER-TIE,RHS,50,60,4,1030.0,P,"(3490, -515, 825)","(3490, 515, 825)",Upper tower tie; damper and tower loads require engineering
+R3-STRUT-TOP-TIE,RHS,50,60,4,1400.0,P,"(420, -700, 900)","(420, 700, 900)",Strut-top tie proxy; actual top mounts are M
+R3-REAR-SERVICE-CROSS,RHS,40,50,3,1838.48,P,"(-650, -650, 650)","(650, 650, 650)",Engine removal opening boundary; clearances unverified
+I-BULKHEAD-HOOP-L,RHS,50,60,4,560.0,X,"(920, 560, 390)","(920, 560, 950)",Candidate thermal/fire bulkhead hoop; do not freeze
+I-BULKHEAD-HOOP-R,RHS,50,60,4,560.0,X,"(920, -560, 390)","(920, -560, 950)",Candidate thermal/fire bulkhead hoop; do not freeze
+I-BULKHEAD-TOP,RHS,50,60,4,1120.0,X,"(920, -560, 950)","(920, 560, 950)",Candidate bulkhead top tie; cockpit and engine package unresolved
