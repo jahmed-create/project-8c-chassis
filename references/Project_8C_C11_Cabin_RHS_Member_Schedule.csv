@@ -1,0 +1,23 @@
+PROJECT 8C C11,CABIN RHS FRAME,CONCEPT ONLY - NOT FOR CUTTING,mm
+Tag,Group,Axis,RHS outer section (ZxY or vertical x transverse) mm,Wall mm,Nominal length mm,Reference coordinate X mm,Reference Y mm,Reference Z mm,Notes
+LS-L,Lower sill,X,100x50,3.0,1661.0,890.0,510.0,445.0,primary sill concept
+US-L,Upper sill,X,60x40,3.0,1661.0,890.0,510.0,675.0,upper sill ladder rail
+P-L1,Sill connector,Z,40x40,3.0,130.0,915.0,510.0,545.0,joint detailing pending
+P-L2,Sill connector,Z,40x40,3.0,130.0,1240.0,510.0,545.0,joint detailing pending
+P-L3,Sill connector,Z,40x40,3.0,130.0,1630.0,510.0,545.0,joint detailing pending
+P-L4,Sill connector,Z,40x40,3.0,130.0,2010.0,510.0,545.0,joint detailing pending
+P-L5,Sill connector,Z,40x40,3.0,130.0,2526.0,510.0,545.0,joint detailing pending
+LS-R,Lower sill,X,100x50,3.0,1661.0,890.0,-510.0,445.0,primary sill concept
+US-R,Upper sill,X,60x40,3.0,1661.0,890.0,-510.0,675.0,upper sill ladder rail
+P-R1,Sill connector,Z,40x40,3.0,130.0,915.0,-510.0,545.0,joint detailing pending
+P-R2,Sill connector,Z,40x40,3.0,130.0,1240.0,-510.0,545.0,joint detailing pending
+P-R3,Sill connector,Z,40x40,3.0,130.0,1630.0,-510.0,545.0,joint detailing pending
+P-R4,Sill connector,Z,40x40,3.0,130.0,2010.0,-510.0,545.0,joint detailing pending
+P-R5,Sill connector,Z,40x40,3.0,130.0,2526.0,-510.0,545.0,joint detailing pending
+LC-1,Lower transverse,Y,100x50,3.0,970.0,915.0,-485.0,445.0,between lower sill inner faces
+LC-2,Lower transverse,Y,100x50,3.0,970.0,1240.0,-485.0,445.0,between lower sill inner faces
+LC-3,Lower transverse,Y,100x50,3.0,970.0,1630.0,-485.0,445.0,between lower sill inner faces
+LC-4,Lower transverse,Y,100x50,3.0,970.0,2010.0,-485.0,445.0,between lower sill inner faces
+LC-5,Lower transverse,Y,100x50,3.0,970.0,2526.0,-485.0,445.0,between lower sill inner faces
+UC-1,Upper end tie,Y,60x40,3.0,980.0,915.0,-490.0,675.0,concept cowl/rear tie only
+UC-2,Upper end tie,Y,60x40,3.0,980.0,2526.0,-490.0,675.0,concept cowl/rear tie only

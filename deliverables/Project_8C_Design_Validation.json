@@ -1,0 +1,68 @@
+{
+  "units": "mm",
+  "coordinate_system": "+X front, +Y vehicle-left, +Z up; rear axle origin",
+  "fcstd_exists": true,
+  "step_files": [
+    "Project_8C_Chassis_01_Front.step",
+    "Project_8C_Chassis_02_Cabin.step",
+    "Project_8C_Chassis_03_Rear.step",
+    "Project_8C_Donor_Proxies_Review.step",
+    "Project_8C_Master_Chassis_Assembly.step"
+  ],
+  "module_counts": {
+    "front": 18,
+    "cabin": 19,
+    "rear": 17,
+    "interfaces": 6
+  },
+  "bbox_mm": {
+    "front": [
+      2372.973,
+      4559.099,
+      -775.0,
+      800.359,
+      235.0,
+      885.0
+    ],
+    "cabin": [
+      865.0,
+      2551.0,
+      -510.0,
+      560.0,
+      445.0,
+      735.0
+    ],
+    "rear": [
+      -866.802,
+      950.0,
+      -610.0,
+      620.0,
+      200.0,
+      975.0
+    ],
+    "assembly": [
+      -866.802,
+      4559.099,
+      -775.0,
+      800.359,
+      200.0,
+      1150.0
+    ]
+  },
+  "axis_check": true,
+  "scale_check": true,
+  "release_state": "CONCEPT / DESIGN REVIEW / ENGINEERING HOLD",
+  "unverified_gates": [
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11"
+  ]
+}

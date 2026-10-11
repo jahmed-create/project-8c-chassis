@@ -1,0 +1,12 @@
+Gate,Required_Input,Release_Effect
+G01,Probox engine transmission year axle configuration,BLOCK rear mounting production
+G02,Probox mounting holes and strut tops 3D,BLOCK rear cradle and strut supports
+G03,GX100 OEM all front link / steering pivot survey,BLOCK suspension mounting holes
+G04,Wheels brakes steering rack and front wing shape,BLOCK front steering/tyre clearance
+G05,Specified damper/coilover lengths and mounts,BLOCK shock brackets
+G06,Final scaled body all fenders and wheel cut geometry,BLOCK frame/body interference signoff
+G07,Seats belts rollover geometry and applicable requirements,BLOCK seat mounts / cabin frame approval
+G08,Rear firewall and transaxle installation go/no-go,BLOCK chassis architecture freeze
+G09,Mass / steel / loading values and actual supplier sections,BLOCK structural release
+G10,"FEA, fatigue, weld review / WPS, jig and inspection",BLOCK fabrication release
+G11,BRTA road approval pathway / vehicle classification,BLOCK road-use approval

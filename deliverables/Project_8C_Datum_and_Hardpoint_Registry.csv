@@ -1,0 +1,74 @@
+ID,System,Description,X_mm,Y_mm,Z_mm,Status,Source,Next_Action
+D-001,Global,Rear wheel station,0,0,,F,master,Confirm ground/reference Z and real tyre
+D-002,Global,Front wheel station,3559.32,0,,D,C03,Verify wheels relative to body arch
+B-001,Body,Global body feature B-001,4805.08,,,D,C03/C10,Verify surface model
+B-002,Body,Global body feature B-002,-1305.08,,,D,C03/C10,Verify surface model
+B-003,Body,Global body feature B-003,2550.85,,,D,C03/C10,Verify surface model
+B-004,Body,Global body feature B-004,889.83,,,D,C03/C10,Verify surface model
+X-001,Body,Previous rear firewall plan - CONFLICT,950,,,X,C09,Resolve vs cabin +889.83 and engine
+X-002,Structure,Front frame rearmost station,2375,,,P,C15/C16,Design overlap to cabin
+X-003,Structure,Front frame forwardmost station,4545,,,P,C15/C16,Confirm front nose and crash architecture
+F-WC-L,Front,"Wheel centre, trial",3559,775,330,P,C14,Confirm tyre/WMS/caster/kingpin
+F-L1-L,Front,Lower arm No.1 mount proxy,3350,425,295,P,C16,Measure bushing/pivot axes OEM
+F-L2-L,Front,Lower arm No.2 mount proxy,3760,425,295,P,C16,Measure bushing/pivot axes OEM
+F-SH-L,Front,Upper coilover mount proxy,3490,515,825,P,C16,Supplier damper eye vs stud / correct angles
+F-U1-L,Front,Upper arm forward pivot,,,,M,GX100 actual donor,3D hardpoint survey
+F-U2-L,Front,Upper arm rear pivot,,,,M,GX100 actual donor,3D hardpoint survey
+F-BJ-U-L,Front,Upper ball joint,,,,M,GX100 actual donor,3D hardpoint survey
+F-BJ-L-L,Front,Lower ball joint,,,,M,GX100 actual donor,3D hardpoint survey
+F-TR-L,Front,Steering outer ball joint,,,,M,GX100 actual donor,3D hardpoint survey
+F-WMS-L,Front,Wheel mounting surface,,,,M,GX100 actual donor,3D hardpoint survey
+F-RACK-L,Front,Rack inner tie rod,,,,M,GX100 actual donor,3D hardpoint survey
+R-ST-L,Rear,Rear MacPherson upper top mount,,,,M,Probox donor,Measure 3D from original installation
+R-SM1-L,Rear,Rear subframe mounting hole 1,,,,M,Probox donor,Measure 3D from original installation
+R-SM2-L,Rear,Rear subframe mounting hole 2,,,,M,Probox donor,Measure 3D from original installation
+R-SM3-L,Rear,Rear subframe mounting hole 3,,,,M,Probox donor,Measure 3D from original installation
+R-SM4-L,Rear,Rear subframe mounting hole 4,,,,M,Probox donor,Measure 3D from original installation
+R-SHAFT-L,Rear,Rear output shaft / CV axis,,,,M,Probox donor,Measure 3D from original installation
+R-ENG-L,Rear,Rear engine mount,,,,M,Probox donor,Measure 3D from original installation
+R-TRANS-L,Rear,Rear transaxle mount,,,,M,Probox donor,Measure 3D from original installation
+R-WC-L,Rear,Provisional hub centre,0,727.5,,P,C08,Measure loaded hub centre z and track
+C-LS-L,Cabin,Lower sill axis origin,890,510,445,P,C11,Check scaled body skin and occupant floor
+C-US-L,Cabin,Upper sill axis origin,890,510,675,P,C11,Check door section clearance and safety
+C-SEAT-L,Cabin,Seat H point,,,,M,seat data,Measure seat travel
+C-BELT-L,Cabin,Seatbelt shoulder / lap anchors,,,,E,occupant safety,Design with qualified engineer
+F-WC-R,Front,"Wheel centre, trial",3559,-775,330,P,C14,Confirm tyre/WMS/caster/kingpin
+F-L1-R,Front,Lower arm No.1 mount proxy,3350,-425,295,P,C16,Measure bushing/pivot axes OEM
+F-L2-R,Front,Lower arm No.2 mount proxy,3760,-425,295,P,C16,Measure bushing/pivot axes OEM
+F-SH-R,Front,Upper coilover mount proxy,3490,-515,825,P,C16,Supplier damper eye vs stud / correct angles
+F-U1-R,Front,Upper arm forward pivot,,,,M,GX100 actual donor,3D hardpoint survey
+F-U2-R,Front,Upper arm rear pivot,,,,M,GX100 actual donor,3D hardpoint survey
+F-BJ-U-R,Front,Upper ball joint,,,,M,GX100 actual donor,3D hardpoint survey
+F-BJ-L-R,Front,Lower ball joint,,,,M,GX100 actual donor,3D hardpoint survey
+F-TR-R,Front,Steering outer ball joint,,,,M,GX100 actual donor,3D hardpoint survey
+F-WMS-R,Front,Wheel mounting surface,,,,M,GX100 actual donor,3D hardpoint survey
+F-RACK-R,Front,Rack inner tie rod,,,,M,GX100 actual donor,3D hardpoint survey
+R-ST-R,Rear,Rear MacPherson upper top mount,,,,M,Probox donor,Measure 3D from original installation
+R-SM1-R,Rear,Rear subframe mounting hole 1,,,,M,Probox donor,Measure 3D from original installation
+R-SM2-R,Rear,Rear subframe mounting hole 2,,,,M,Probox donor,Measure 3D from original installation
+R-SM3-R,Rear,Rear subframe mounting hole 3,,,,M,Probox donor,Measure 3D from original installation
+R-SM4-R,Rear,Rear subframe mounting hole 4,,,,M,Probox donor,Measure 3D from original installation
+R-SHAFT-R,Rear,Rear output shaft / CV axis,,,,M,Probox donor,Measure 3D from original installation
+R-ENG-R,Rear,Rear engine mount,,,,M,Probox donor,Measure 3D from original installation
+R-TRANS-R,Rear,Rear transaxle mount,,,,M,Probox donor,Measure 3D from original installation
+R-WC-R,Rear,Provisional hub centre,0,-727.5,,P,C08,Measure loaded hub centre z and track
+C-LS-R,Cabin,Lower sill axis origin,890,-510,445,P,C11,Check scaled body skin and occupant floor
+C-US-R,Cabin,Upper sill axis origin,890,-510,675,P,C11,Check door section clearance and safety
+C-SEAT-R,Cabin,Seat H point,,,,M,seat data,Measure seat travel
+C-BELT-R,Cabin,Seatbelt shoulder / lap anchors,,,,E,occupant safety,Design with qualified engineer
+C-XM-01,Cabin,Floor crossmember station,915,0,445,P,C11,Section/load geometry pending
+C-XM-02,Cabin,Floor crossmember station,1240,0,445,P,C11,Section/load geometry pending
+C-XM-03,Cabin,Floor crossmember station,1630,0,445,P,C11,Section/load geometry pending
+C-XM-04,Cabin,Floor crossmember station,2010,0,445,P,C11,Section/load geometry pending
+C-XM-05,Cabin,Floor crossmember station,2526,0,445,P,C11,Section/load geometry pending
+C-FLOOR,Common,Floor sheet / top datum,,,,M/E,open,Measure/design and approve
+C-PEDAL,Common,Pedal box,,,,M/E,open,Measure/design and approve
+C-STEER,Common,Steering column support,,,,M/E,open,Measure/design and approve
+C-DOOR,Common,Door hinges/latch,,,,M/E,open,Measure/design and approve
+C-ROLL,Common,Rollover structure,,,,M/E,open,Measure/design and approve
+R-FIRE,Common,Final rear firewall,,,,M/E,open,Measure/design and approve
+R-FUEL,Common,Fuel tank and routing,,,,M/E,open,Measure/design and approve
+R-EXH,Common,Exhaust heat shield,,,,M/E,open,Measure/design and approve
+R-SUB,Common,Subframe datum,,,,M/E,open,Measure/design and approve
+C-COWL,Common,Windscreen/cowl hoop,,,,M/E,open,Measure/design and approve
+F-RACK,Common,Front steering rack,,,,M/E,open,Measure/design and approve

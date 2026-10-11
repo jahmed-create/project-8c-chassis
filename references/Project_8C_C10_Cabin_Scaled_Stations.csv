@@ -1,0 +1,9 @@
+Project 8C / C10,Cabin body station scaling,S=2100/1770,UNVERIFIED CONCEPT
+Original_macro_s_mm,Chassis_X_mm,Scaled_body_full_width_mm,Scaled_half_width_mm,Scaled_bottom_z_mm,Scaled_shoulder_z_mm,Scaled_crown_z_mm,Station_type
+1900,2550.85,1364.41,682.2,308.47,937.29,1245.76,source station
+2200,2194.92,1400.0,700.0,308.47,972.88,1328.81,source station
+2500,1838.98,1423.73,711.86,308.47,984.75,1352.54,source station
+2800,1483.05,1423.73,711.86,308.47,984.75,1352.54,source station
+3100,1127.12,1423.73,711.86,308.47,972.88,1316.95,source station
+3300,889.83,1407.91,703.95,308.47,957.06,1261.58,interpolated (nominal)
+3400,771.19,1400.0,700.0,308.47,949.15,1233.9,source station

@@ -1,0 +1,13 @@
+PROJECT 8C - C17 CHASSIS CAD AGENT MANDATE
+
+Read Project_8C_C17_Complete_Chassis_Constraints_Codex_Fabrication_Dossier.pdf in full.
+Load Project_8C_C17_Constraint_Master.json and Project_8C_C17_Hardpoint_Registry.csv.
+All M/E/X/P status constraints must be explicitly labelled in generated CAD and reports.
+Architecture: 1938 8C Lungo Spider uniform body scale 2100/1770; GX100 front; Probox 1NZ-FE rear hypothesis; three integrated modules.
+Build a coherent, attractive, efficient fabricable RHS chassis concept with continuous load paths.
+First produce a parameter and contradictions audit, then a body+wheel package, then a joined structural skeleton.
+Create FCStd and STEP assemblies by section, weldment/member schedules, 2D drawings and an engineering HOLD report.
+Do not assume old C11/C15/C16 STEP concept validity proves roadworthiness or fit.
+Never cut/drill/weld or label fabrication-ready until actual donor measurement, suspension kinematics, loads, FEA, weld reviews and legal checks.
+Explicitly address the rear cockpit/firewall X889.83/950 conflict, +2375/+2551 front-cabin overlap and scaled wheel arch mismatches.
+Any omitted information should lead to clearly named unsolved parameters rather than guesses.

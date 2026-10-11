@@ -1,0 +1,203 @@
+{
+  "version": "Project8C_C17_rev0",
+  "date": "2026-10-11",
+  "units": "mm",
+  "purpose": "concept geometry and fabrication-oriented engineering study; NOT released",
+  "status_codes": {
+    "F": "agreed project target",
+    "D": "derived from agreed target",
+    "P": "provisional",
+    "M": "survey needed",
+    "E": "engineering approval needed",
+    "X": "conflict"
+  },
+  "coordinate_system": {
+    "X": "+front",
+    "Y": "+vehicle_left",
+    "Z": "+up",
+    "origin": "rear-wheel station x=0, y=0, ground z=0 provisional"
+  },
+  "scale": {
+    "expr": "2100/1770",
+    "value": 1.1864406779661016,
+    "scope": "historic body only, not Toyota hardware"
+  },
+  "body": {
+    "reference": "1938 8C 2900B Lungo Spider, assume 1938/1939 same for project",
+    "overall_length": {
+      "value": 6110.169491525424,
+      "status": "D"
+    },
+    "overall_width": {
+      "value": 2100,
+      "status": "F"
+    },
+    "overall_height": {
+      "value": 1779.6610169491526,
+      "status": "D"
+    },
+    "wheelbase": {
+      "value": 3559.322033898305,
+      "status": "D"
+    },
+    "body_front_x": 4805.0847457627115,
+    "body_rear_x": -1305.084745762712,
+    "macro_s_to_master_x": "(4050-s)*S",
+    "known_limitation": "starter shell max station width 1423.7 mm; actual 2100 mm fender surface not modelled"
+  },
+  "zones": {
+    "front": {
+      "x0": 2375,
+      "x1": 4545,
+      "source": "C15/C16",
+      "status": "P"
+    },
+    "cabin": {
+      "x0": 890,
+      "x1": 2551,
+      "source": "C11",
+      "status": "P"
+    },
+    "rear": {
+      "x0": -791,
+      "x1": 950,
+      "source": "C09/C08",
+      "status": "P"
+    }
+  },
+  "cabin": {
+    "opening_x": [
+      889.83,
+      2550.85
+    ],
+    "opening_nominal_width": 1423.73,
+    "lower_sill_centres_y": [
+      510,
+      -510
+    ],
+    "lower_sill_z": [
+      445,
+      545
+    ],
+    "lower_sill_section": [
+      100,
+      50,
+      3
+    ],
+    "upper_sill_centres_y": [
+      510,
+      -510
+    ],
+    "upper_sill_z": [
+      675,
+      735
+    ],
+    "upper_sill_section": [
+      60,
+      40,
+      3
+    ],
+    "crossmember_x": [
+      915,
+      1240,
+      1630,
+      2010,
+      2526
+    ],
+    "lower_frame_outer_width": 1070,
+    "lower_clear_span": 970,
+    "status": "P"
+  },
+  "front": {
+    "donor_family": "Toyota Mark II GX100/X100 upright and distinct lower link 1/2",
+    "wheel_x": 3559,
+    "track": 1550,
+    "wheel_centres_y": [
+      775,
+      -775
+    ],
+    "wheel_centre_z": 330,
+    "tyre_OD": 660,
+    "tyre_width": 215,
+    "lower_link1_proxy_x_y_z_L": [
+      3350,
+      425,
+      295
+    ],
+    "lower_link2_proxy_x_y_z_L": [
+      3760,
+      425,
+      295
+    ],
+    "coilover_upper_proxy_x_y_z_L": [
+      3490,
+      515,
+      825
+    ],
+    "trial_clevis": {
+      "hole_diameter": 14,
+      "plate_thickness": 6,
+      "internal_gap": 54,
+      "hole_axis": "X",
+      "status": "P"
+    }
+  },
+  "rear": {
+    "donor": "Toyota Probox believed 2005 NCP51V 1NZ-FE automatic",
+    "rear_track_reference": 1455,
+    "rear_hub_y": [
+      727.5,
+      -727.5
+    ],
+    "rear_powertrain_box_YXZ": [
+      1100,
+      850,
+      750
+    ],
+    "complete_module_x": [
+      -650,
+      800
+    ],
+    "legacy_firewall_x": 950,
+    "engine_transaxle_orientation": "UNVERIFIED",
+    "subframe_mount_XYZ": "UNMEASURED",
+    "strut_top_XYZ": "UNMEASURED",
+    "status": "P/M"
+  },
+  "conflicts": [
+    {
+      "id": "X-01",
+      "desc": "rear cockpit aft X889.83 vs firewall X950",
+      "resolution": "bulkhead engineering and packaging required",
+      "status": "X"
+    },
+    {
+      "id": "X-02",
+      "desc": "front frame X2375 to cabin X2551 overlap 176 mm",
+      "resolution": "design physical common load-path splice",
+      "status": "X"
+    },
+    {
+      "id": "X-03",
+      "desc": "scaled starter wheel arch center Z391.5 and radius444.9 vs front tyre wheel Z330 radius330",
+      "resolution": "real tyre and full fender sweep including ride height, retain exterior proportions",
+      "status": "X"
+    },
+    {
+      "id": "X-04",
+      "desc": "outer body target 2100 vs starter shell loft max central width1423.7",
+      "resolution": "obtain separate fender body CAD",
+      "status": "X"
+    }
+  ],
+  "hardpoint_registry_filename": "Project_8C_C17_Hardpoint_Registry.csv",
+  "open_gates_filename": "Project_8C_C17_Open_Gates.csv",
+  "rules": [
+    "Never scale Toyota donor parts",
+    "Never invent suspension or subframe bolt locations",
+    "Do not use study clevis hole diameters for machining",
+    "Solve firewall/body and front overlap clashes",
+    "Track status/provenance per geometry element",
+    "No fabrication release without calculations measurements structural and legal review"
+  ]
+}
