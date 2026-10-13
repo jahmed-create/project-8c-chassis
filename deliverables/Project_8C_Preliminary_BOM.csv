@@ -1,11 +1,13 @@
 category,section,wall_mm,status,qty,nominal_total_length_mm,release_note
-RHS,40x40,3,P,14,4276.4,Nominal adapter/continuity lengths; final trims and weld allowances require measured interfaces and jig review
-RHS,40x50,3,P,9,6985.2,Nominal adapter/continuity lengths; final trims and weld allowances require measured interfaces and jig review
-RHS,40x60,3,P,2,3322.0,Nominal adapter/continuity lengths; final trims and weld allowances require measured interfaces and jig review
-RHS,50x100,3,P,7,8172.0,Nominal adapter/continuity lengths; final trims and weld allowances require measured interfaces and jig review
-RHS,50x50,3,P,2,2340.0,Nominal adapter/continuity lengths; final trims and weld allowances require measured interfaces and jig review
-RHS,50x60,3,P,2,372.0,Nominal adapter/continuity lengths; final trims and weld allowances require measured interfaces and jig review
-RHS,50x60,4,P,4,3224.1,Nominal adapter/continuity lengths; final trims and weld allowances require measured interfaces and jig review
-RHS,50x60,4,X,3,2240.0,Nominal adapter/continuity lengths; final trims and weld allowances require measured interfaces and jig review
-RHS,60x60,4,P,12,13518.0,Nominal adapter/continuity lengths; final trims and weld allowances require measured interfaces and jig review
-RHS,60x80,4,P,14,19405.2,Nominal adapter/continuity lengths; final trims and weld allowances require measured interfaces and jig review
+RHS,40x40,3,P,14,4276.4,"Nominal spaceframe/member lengths; final trims, welds, and load approval required"
+RHS,40x50,3,P,9,6985.2,"Nominal spaceframe/member lengths; final trims, welds, and load approval required"
+RHS,40x60,3,P,2,3322.0,"Nominal spaceframe/member lengths; final trims, welds, and load approval required"
+RHS,50x100,3,P,7,8172.0,"Nominal spaceframe/member lengths; final trims, welds, and load approval required"
+RHS,50x50,3,P,2,2340.0,"Nominal spaceframe/member lengths; final trims, welds, and load approval required"
+RHS,50x60,3,P,2,372.0,"Nominal spaceframe/member lengths; final trims, welds, and load approval required"
+RHS,50x60,4,P,4,3224.1,"Nominal spaceframe/member lengths; final trims, welds, and load approval required"
+RHS,50x60,4,X,3,2240.0,"Nominal spaceframe/member lengths; final trims, welds, and load approval required"
+RHS,60x60,4,P,12,13518.0,"Nominal spaceframe/member lengths; final trims, welds, and load approval required"
+RHS,60x80,4,P,14,19405.2,"Nominal spaceframe/member lengths; final trims, welds, and load approval required"
+RHS,40x40,3,P,55,65321.6,"Nominal spaceframe/member lengths; final trims, welds, and load approval required"
+RHS,50x50,3,P,23,26068.8,"Nominal spaceframe/member lengths; final trims, welds, and load approval required"

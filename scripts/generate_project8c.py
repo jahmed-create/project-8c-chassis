@@ -36,7 +36,7 @@ def color(o,c,t=0):
     try: o.ViewObject.ShapeColor=c; o.ViewObject.Transparency=t
     except Exception: pass
 
-g_params=group('G00_Parameters','00 Parameters & Revisions'); g_body=group('G01_BodyReference','01 Body Reference'); g_hp=group('G02_HardpointSkeleton','02 Hardpoint Skeleton'); g_donor_front=group('G03_DonorFrontGX100','03 Donor Front GX100 (provisional)'); g_donor_rear=group('G04_DonorRearProbox','04 Donor Rear Probox (provisional)'); g_front=group('G05_Front','05 Chassis 01 Front'); g_cabin=group('G06_Cabin','06 Chassis 02 Cabin'); g_rear=group('G07_Rear','07 Chassis 03 Rear'); g_int=group('G08_Interfaces','08 Interfaces Global'); g_seats=group('G09_Occupants','09 Seats Controls Belts'); g_bodymount=group('G10_BodyMounts','10 Body Mounts and Fluid Routing'); g_analysis=group('G11_Analysis','11 Analysis'); g_fab=group('G12_Fabrication','12 Fabrication'); g_exports=group('G13_Exports','13 Exports'); g_wheels=group('G14_Wheels','14 Wheel and Tyre Study')
+g_params=group('G00_Parameters','00 Parameters & Revisions'); g_body=group('G01_BodyReference','01 Body Reference'); g_hp=group('G02_HardpointSkeleton','02 Hardpoint Skeleton'); g_donor_front=group('G03_DonorFrontGX100','03 Donor Front GX100 (provisional)'); g_donor_rear=group('G04_DonorRearProbox','04 Donor Rear Probox (provisional)'); g_front=group('G05_Front','05 Chassis 01 Front'); g_cabin=group('G06_Cabin','06 Chassis 02 Cabin'); g_rear=group('G07_Rear','07 Chassis 03 Rear'); g_int=group('G08_Interfaces','08 Interfaces Global'); g_seats=group('G09_Occupants','09 Seats Controls Belts'); g_bodymount=group('G10_BodyMounts','10 Body Mounts and Fluid Routing'); g_analysis=group('G11_Analysis','11 Analysis'); g_fab=group('G12_Fabrication','12 Fabrication'); g_exports=group('G13_Exports','13 Exports'); g_wheels=group('G14_Wheels','14 Wheel and Tyre Study'); g_space=group('G15_Spaceframe','15 Triangulated Spaceframe Architecture')
 param=doc.addObject('App::FeaturePython','MasterParameters'); param.Label='C17 Master Parameters (design review)'
 for n,v,s in [('Scale',SCALE,'F'),('BodyLength',BODY_L,'D'),('BodyWidth',2100,'F'),('Wheelbase',WB,'D'),('RearAxleX',0,'F'),('FrontAxleX',FRONT_X,'D'),('FrontTrackStudy',1550,'P'),('RearTrackReference',1455,'P'),('FrontWheelZ',330,'P'),('CabinAftX',889.83,'P'),('LegacyFirewallX',950,'X'),('FrontFrameStartX',2375,'P'),('CabinFrontX',2550.85,'P'),('RearModuleMinX',-791,'P'),('RearModuleMaxX',950,'P')]:
     add_prop(param,'App::PropertyLength',n,v,'C17 Parameters'); add_prop(param,'App::PropertyString',n+'_Status',s,'C17 Status')
@@ -88,6 +88,52 @@ member_rows=[]
 def member(grp,n,p0,p1,sy,sz,wall,status,source,notes,section='RHS'):
     o=feature(grp,n,tube(p0,p1,sy,sz,wall),status,source,n,notes); add_prop(o,'App::PropertyLength','OuterY',sy,'RHS'); add_prop(o,'App::PropertyLength','OuterZ',sz,'RHS'); add_prop(o,'App::PropertyLength','Wall',wall,'RHS'); add_prop(o,'App::PropertyString','StartNode',str(tuple(round(v,2) for v in p0)),'RHS'); add_prop(o,'App::PropertyString','EndNode',str(tuple(round(v,2) for v in p1)),'RHS'); add_prop(o,'App::PropertyString','Section',section,'RHS'); color(o,(0.72,0.72,0.75))
     member_rows.append({'part_id':n,'section':section,'outer_y':sy,'outer_z':sz,'wall':wall,'length_mm':round(math.dist(p0,p1),2),'status':status,'start':p0,'end':p1,'notes':notes}); return o
+# Spaceframe architecture matching the supplied reference image: paired lower
+# and upper rails, triangulated side bays, front/rear pyramids, and a caged
+# cockpit.  These are design-review members until loads, tube grade, joint
+# details, and donor interfaces are approved.
+spaceframe_objs=[]
+def sf(n,p0,p1,sy=40,sz=40,wall=3.0,notes='Triangulated RHS spaceframe member'):
+    o=member(g_space,n,p0,p1,sy,sz,wall,'P','C17 image-led spaceframe architecture',notes,f'RHS {sy}x{sz}x{wall}')
+    spaceframe_objs.append(o); color(o,(0.12,0.12,0.14)); return o
+lowerL=[(-800,650,280),(0,650,280),(890,560,430),(2551,560,430),(3559,580,360),(4545,450,380)]
+lowerR=[(x,-y,z) for x,y,z in lowerL]
+upperL=[(-750,650,820),(890,580,950),(2551,580,1050),(3559,600,850),(4545,400,700)]
+upperR=[(x,-y,z) for x,y,z in upperL]
+for side,lo,up in [('L',lowerL,upperL),('R',lowerR,upperR)]:
+    for i in range(len(lo)-1):
+        sf(f'SF-LOWER-{side}-{i+1}',lo[i],lo[i+1],50,50,3,'Primary lower rail')
+    for i in range(len(up)-1):
+        sf(f'SF-UPPER-{side}-{i+1}',up[i],up[i+1],40,40,3,'Upper perimeter rail')
+    for i in range(len(up)):
+        sf(f'SF-VERTICAL-{side}-{i+1}',lo[min(i,len(lo)-1)],up[i],40,40,3,'Bay vertical / suspension load transfer')
+    for i in range(len(up)-1):
+        sf(f'SF-DIAG-A-{side}-{i+1}',lo[i],up[i+1],40,40,3,'Triangulated side bay'); sf(f'SF-DIAG-B-{side}-{i+1}',up[i],lo[i+1],40,40,3,'Triangulated side bay')
+for i in range(5):
+    sf(f'SF-LOWER-CROSS-{i+1}',lowerL[i],lowerR[i],50,50,3,'Lower floor / suspension crossmember')
+for i in range(5):
+    sf(f'SF-UPPER-CROSS-{i+1}',upperL[i],upperR[i],40,40,3,'Upper spaceframe crossmember')
+# Front nose pyramid and rear donor bay pyramid.
+for side,sgn in [('L',1),('R',-1)]:
+    sf(f'SF-NOSE-LOW-{side}',(4545,450*sgn,380),(4805,300*sgn,350),40,40,3,'Forward nose lower rail')
+    sf(f'SF-NOSE-UP-{side}',(4545,400*sgn,700),(4805,250*sgn,650),40,40,3,'Forward nose upper rail')
+    sf(f'SF-NOSE-DIAG-{side}',(4545,450*sgn,380),(4805,250*sgn,650),40,40,3,'Nose pyramid diagonal')
+    sf(f'SF-REAR-PYRAMID-{side}',(-800,650*sgn,280),(-750,650*sgn,820),40,40,3,'Rear donor-bay upright')
+# Open-top cockpit cage / rollover study, with roof diagonals like the target
+# spaceframe image.  It remains provisional until seat and restraint review.
+for side,sgn in [('L',1),('R',-1)]:
+    sf(f'SF-COCKPIT-REAR-POST-{side}',(890,580*sgn,430),(890,580*sgn,1350),50,50,3,'Rear cockpit cage post')
+    sf(f'SF-COCKPIT-FRONT-POST-{side}',(2551,580*sgn,430),(2551,580*sgn,1350),50,50,3,'Front cockpit cage post')
+    sf(f'SF-DOOR-INTRUSION-A-{side}',(1050,650*sgn,560),(2100,650*sgn,920),40,40,3,'Side intrusion diagonal')
+    sf(f'SF-DOOR-INTRUSION-B-{side}',(1050,650*sgn,920),(2100,650*sgn,560),40,40,3,'Side intrusion diagonal')
+sf('SF-COCKPIT-REAR-HOOP',(890,-580,1350),(890,580,1350),50,50,3,'Rear cage hoop tie')
+sf('SF-COCKPIT-FRONT-HOOP',(2551,-580,1350),(2551,580,1350),50,50,3,'Front cage hoop tie')
+sf('SF-ROOF-RAIL-L',(890,580,1350),(2551,580,1350),50,50,3,'Cage roof rail')
+sf('SF-ROOF-RAIL-R',(890,-580,1350),(2551,-580,1350),50,50,3,'Cage roof rail')
+sf('SF-ROOF-X-1',(890,-580,1350),(2551,580,1350),40,40,3,'Roof triangulation')
+sf('SF-ROOF-X-2',(890,580,1350),(2551,-580,1350),40,40,3,'Roof triangulation')
+sf('SF-COWL-DIAG-L',(2551,580,1350),(3350,425,295),40,40,3,'Front cowl to suspension bay diagonal')
+sf('SF-COWL-DIAG-R',(2551,-580,1350),(3350,-425,295),40,40,3,'Front cowl to suspension bay diagonal')
 # The supplied donor assemblies are now the module payloads.  These short
 # RHS members are only integration adapters; they do not invent donor bolt
 # coordinates or replace the source suspension geometry.
@@ -150,14 +196,14 @@ for i,(x,y) in enumerate([(1100,510),(1100,-510),(2450,510),(2450,-510)],1):
     o=feature(g_bodymount,f'BM-{i}',marker((x,y,430),12,25),'P','Body mount concept','BODY-MOUNT','Composite-body isolation mount; skin unverified'); color(o,(0.2,0.7,0.9))
 load=feature(g_analysis,'A-LoadPath-Reference',Part.makePolygon([App.Vector(-791,0,430),App.Vector(950,0,430),App.Vector(2551,0,445),App.Vector(4545,0,500)]),'E','C17 analysis requirement','ANALYSIS-LOADPATH','Schematic only; no FEA'); color(load,(1.0,0.1,0.1))
 # save/export
-front_objs=front_adapter_objs+[front_replacement]; cabin_objs=[o for o in g_cabin.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; rear_objs=rear_adapter_objs+[rear_replacement]; int_objs=[o for o in g_int.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; structural_objs=front_adapter_objs+cabin_objs+rear_adapter_objs+int_objs; review_objs=structural_objs+[front_replacement,rear_replacement,c11_ref,body_open]+front_wheels+rear_wheels
+front_objs=front_adapter_objs+[front_replacement]; cabin_objs=[o for o in g_cabin.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; rear_objs=rear_adapter_objs+[rear_replacement]; int_objs=[o for o in g_int.Group if hasattr(o,'Shape') and not o.Shape.isNull()]; structural_objs=front_adapter_objs+cabin_objs+rear_adapter_objs+int_objs+spaceframe_objs; review_objs=structural_objs+[front_replacement,rear_replacement,c11_ref,body_open]+front_wheels+rear_wheels
 for old in list(g_front.Group)+list(g_rear.Group):
     if old not in front_objs and old not in rear_objs:
         try: old.ViewObject.Visibility=False
         except Exception: pass
 
 doc.recompute(); doc.saveAs(str(OUT/'Project_8C_Master_Chassis.FCStd'))
-for objs,path in [(front_objs,OUT/'Project_8C_Chassis_01_Front.step'),(cabin_objs,OUT/'Project_8C_Chassis_02_Cabin.step'),(rear_objs,OUT/'Project_8C_Chassis_03_Rear.step'),(structural_objs,OUT/'Project_8C_Structural_Chassis_Assembly.step'),(review_objs,OUT/'Project_8C_Master_Chassis_Assembly.step')]: Part.export(objs,str(path))
+for objs,path in [(front_objs,OUT/'Project_8C_Chassis_01_Front.step'),(cabin_objs,OUT/'Project_8C_Chassis_02_Cabin.step'),(rear_objs,OUT/'Project_8C_Chassis_03_Rear.step'),(spaceframe_objs,OUT/'Project_8C_Spaceframe_Architecture.step'),(structural_objs,OUT/'Project_8C_Structural_Chassis_Assembly.step'),(review_objs,OUT/'Project_8C_Master_Chassis_Assembly.step')]: Part.export(objs,str(path))
 Part.export([front_replacement,rear_replacement,c11_ref],str(OUT/'Project_8C_Donor_Proxies_Review.step'))
 with open(OUT/'Project_8C_Datum_and_Hardpoint_Registry.csv','w',newline='') as f:
     w=csv.writer(f); w.writerow(['id','x_mm','y_mm','z_mm','status','source','notes']); [w.writerow(list(r)+['Marker only']) for r in hardpoints]
@@ -175,9 +221,9 @@ def bb(objs):
     b=None
     for o in objs: b=o.Shape.BoundBox if b is None else b.united(o.Shape.BoundBox)
     return None if b is None else [round(v,3) for v in (b.XMin,b.XMax,b.YMin,b.YMax,b.ZMin,b.ZMax)]
-checks={'units':'mm','coordinate_system':'+X front, +Y vehicle-left, +Z up; rear axle origin','fcstd_exists':(OUT/'Project_8C_Master_Chassis.FCStd').exists(),'step_files':[p.name for p in OUT.glob('*.step')],'module_counts':{'front':len(front_objs),'cabin':len(cabin_objs),'rear':len(rear_objs),'interfaces':len(int_objs),'structural':len(structural_objs),'review_assembly':len(review_objs)},'bbox_mm':{'front':bb(front_objs),'cabin':bb(cabin_objs),'rear':bb(rear_objs),'structural_assembly':bb(structural_objs),'review_assembly':bb(review_objs)},'axis_check':True,'scale_check':abs(SCALE-2100/1770)<1e-12,'release_state':'CONCEPT / DESIGN REVIEW / ENGINEERING HOLD','unverified_gates':['G01','G02','G03','G04','G05','G06','G07','G08','G09','G10','G11']}
+checks={'units':'mm','coordinate_system':'+X front, +Y vehicle-left, +Z up; rear axle origin','fcstd_exists':(OUT/'Project_8C_Master_Chassis.FCStd').exists(),'step_files':[p.name for p in OUT.glob('*.step')],'module_counts':{'front':len(front_objs),'cabin':len(cabin_objs),'rear':len(rear_objs),'interfaces':len(int_objs),'spaceframe':len(spaceframe_objs),'structural':len(structural_objs),'review_assembly':len(review_objs)},'bbox_mm':{'front':bb(front_objs),'cabin':bb(cabin_objs),'rear':bb(rear_objs),'spaceframe':bb(spaceframe_objs),'structural_assembly':bb(structural_objs),'review_assembly':bb(review_objs)},'axis_check':True,'scale_check':abs(SCALE-2100/1770)<1e-12,'release_state':'CONCEPT / DESIGN REVIEW / ENGINEERING HOLD','unverified_gates':['G01','G02','G03','G04','G05','G06','G07','G08','G09','G10','G11']}
 with open(OUT/'Project_8C_Design_Validation.json','w') as f: json.dump(checks,f,indent=2)
-report=f'''Project 8C C17 integrated chassis design review\nRevision: C17 Rev 0 / generated 2026-10-11\nSTATUS: CONCEPT / DESIGN REVIEW / ENGINEERING HOLD\n\nArchitecture\n- Continuous paired primary rails run from the rear bay through deep cabin sills into the GX100 front cradle, with second-level diagonal load paths and explicit tower ties.\n- Cabin floor crossmembers, a provisional shear panel, side-door diagonals and shared X-02 overlap members make the open-top torsion strategy explicit.\n- The supplied 108-solid C18 front reference, 199-solid Probox reference and 21-solid C11 cabin reference are retained at their supplied global positions in the review assembly.\n- Rear Probox packaging is represented by a replaceable RHS cradle around the actual donor envelope, with four measured-point placeholders and a removable service opening.\n- Firewall at X=950 and cockpit aft edge X=889.83 remain the visible X-01 conflict pending thermal, seat, and service packaging.\n\nFixed / derived parameters\n- Body width 2100 mm (F); body length {BODY_L:.2f} mm (D); wheelbase {WB:.2f} mm (D).\n- Rear axle X=0 (F); front axle X={FRONT_X:.2f} (D); +X front, +Y vehicle-left, +Z up.\n- Toyota donor geometry is not scaled; donor interfaces are P/M proxies.\n\nDesign assessment\n- C11 is retained as a spatial reference and strengthened with 60x80x4 lap rails and diagonal splice members.\n- C16 front study is reorganized into paired continuous rails, four crossmembers, wheel outriggers, and proxy tower load paths.\n- Probox Rev01 is retained as a packaging reference; rear-drive transaxle feasibility, mounts, axle geometry, lubrication, cooling, and service removal remain unresolved.\n- Scaled central shell station loft is reference geometry only; validated fenders are absent and wheel/arch conflict X-03 remains open.\n\nEngineering limitations\n- No donor drilling, weld specification, material certificate, fatigue result, FEA, kinematics solution, brake calculation, restraint calculation, or legal approval is asserted.\n- Bracket drilling schedule is a HOLD. Fabrication requires closure of C17 gates G01-G11 and independent competent review.\n'''
+report=f'''Project 8C C17 integrated chassis design review\nRevision: C17 Rev 0 / generated 2026-10-11\nSTATUS: CONCEPT / DESIGN REVIEW / ENGINEERING HOLD\n\nArchitecture\n- Image-led triangulated spaceframe: paired lower/upper rails, repeated side-bay diagonals, front/rear pyramids, cockpit intrusion bars, and an open-top cage.\n- Cabin floor crossmembers, a provisional shear panel, side-door diagonals and shared X-02 overlap members tie the spaceframe into the supplied donor modules.\n- The supplied 108-solid C18 front reference, 199-solid Probox reference and 21-solid C11 cabin reference are retained at their supplied global positions in the review assembly.\n- Rear Probox packaging is represented by a replaceable RHS cradle around the actual donor envelope, with four measured-point placeholders and a removable service opening.\n- Firewall at X=950 and cockpit aft edge X=889.83 remain the visible X-01 conflict pending thermal, seat, and service packaging.\n\nFixed / derived parameters\n- Body width 2100 mm (F); body length {BODY_L:.2f} mm (D); wheelbase {WB:.2f} mm (D).\n- Rear axle X=0 (F); front axle X={FRONT_X:.2f} (D); +X front, +Y vehicle-left, +Z up.\n- Toyota donor geometry is not scaled; donor interfaces are P/M proxies.\n\nDesign assessment\n- C11 is retained as a spatial reference and strengthened with 60x80x4 lap rails and diagonal splice members.\n- C16 front study is reorganized into paired continuous rails, four crossmembers, wheel outriggers, and proxy tower load paths.\n- Probox Rev01 is retained as a packaging reference; rear-drive transaxle feasibility, mounts, axle geometry, lubrication, cooling, and service removal remain unresolved.\n- Scaled central shell station loft is reference geometry only; validated fenders are absent and wheel/arch conflict X-03 remains open.\n\nEngineering limitations\n- No donor drilling, weld specification, material certificate, fatigue result, FEA, kinematics solution, brake calculation, restraint calculation, or legal approval is asserted.\n- Bracket drilling schedule is a HOLD. Fabrication requires closure of C17 gates G01-G11 and independent competent review.\n'''
 (OUT/'Project_8C_Engineering_Report.md').write_text(report)
 try:
  import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt; from matplotlib.backends.backend_pdf import PdfPages

@@ -1,9 +1,11 @@
-# Front/rear module replacement review
+# Spaceframe rebuild review
 
-The supplied C18 GX100 STEP is now the actual front-module payload. `Project_8C_Chassis_01_Front.step` contains the 108 supplied C18 solids plus three explicitly named cabin-to-C18 RHS adapter members. The old proxy front frame members remain in the FreeCAD history tree as hidden comparison geometry and are excluded from the front export.
+The architecture now follows the supplied reference image as a triangulated spaceframe rather than a ladder frame with a few braces.
 
-The supplied Probox cassette is now the actual rear-module payload. `Project_8C_Chassis_03_Rear.step` contains the 199 supplied Probox solids plus four named RHS cradle adapter members. The old proxy rear frame members remain hidden comparison geometry and are excluded from the rear export.
+- 78 dedicated `SF-*` members form paired lower and upper rails, repeated side-bay triangles, lower/upper crossmembers, front and rear pyramids, cockpit hoops, roof X-bracing, side intrusion bars, and cowl diagonals.
+- The supplied C18 GX100 assembly remains the actual front-module payload: 108 donor solids plus three cabin adapters.
+- The supplied Probox cassette remains the actual rear-module payload: 199 donor solids plus four cradle adapters.
+- The C11 cabin reference, scaled body opening study, and wheel/tyre envelopes remain separately tagged reference geometry.
+- `Project_8C_Spaceframe_Architecture.step` isolates the image-led tubular frame. `Project_8C_Structural_Chassis_Assembly.step` contains the spaceframe, cabin continuity members, and donor adapters. `Project_8C_Master_Chassis_Assembly.step` contains the full review assembly.
 
-`Project_8C_Structural_Chassis_Assembly.step` contains the cabin, continuity/interface weldment, and only the adapter members. `Project_8C_Master_Chassis_Assembly.step` contains the body opening study, wheel/tyre envelopes, cabin, continuity structure, and the actual supplied C18/Probox/C11 reference payloads at their global coordinates.
-
-The donor assemblies are still provisional design inputs. No hole pattern, bolt axis, suspension mount, drivetrain orientation, or safety claim is inferred from their visual alignment.
+The triangulation is a packaging and load-path study. It does not establish tube grade, weld detail, suspension pickup strength, rollover compliance, or fabrication release.

@@ -1,4 +1,82 @@
 part_id,section,outer_y,outer_z,wall,length_mm,status,start,end,notes
+SF-LOWER-L-1,RHS 50x50x3,50,50,3,800.0,P,"(-800, 650, 280)","(0, 650, 280)",Primary lower rail
+SF-LOWER-L-2,RHS 50x50x3,50,50,3,907.03,P,"(0, 650, 280)","(890, 560, 430)",Primary lower rail
+SF-LOWER-L-3,RHS 50x50x3,50,50,3,1661.0,P,"(890, 560, 430)","(2551, 560, 430)",Primary lower rail
+SF-LOWER-L-4,RHS 50x50x3,50,50,3,1010.63,P,"(2551, 560, 430)","(3559, 580, 360)",Primary lower rail
+SF-LOWER-L-5,RHS 50x50x3,50,50,3,994.73,P,"(3559, 580, 360)","(4545, 450, 380)",Primary lower rail
+SF-UPPER-L-1,RHS 40x40x3,40,40,3,1646.63,P,"(-750, 650, 820)","(890, 580, 950)",Upper perimeter rail
+SF-UPPER-L-2,RHS 40x40x3,40,40,3,1664.01,P,"(890, 580, 950)","(2551, 580, 1050)",Upper perimeter rail
+SF-UPPER-L-3,RHS 40x40x3,40,40,3,1027.84,P,"(2551, 580, 1050)","(3559, 600, 850)",Upper perimeter rail
+SF-UPPER-L-4,RHS 40x40x3,40,40,3,1017.2,P,"(3559, 600, 850)","(4545, 400, 700)",Upper perimeter rail
+SF-VERTICAL-L-1,RHS 40x40x3,40,40,3,542.31,P,"(-800, 650, 280)","(-750, 650, 820)",Bay vertical / suspension load transfer
+SF-VERTICAL-L-2,RHS 40x40x3,40,40,3,1116.2,P,"(0, 650, 280)","(890, 580, 950)",Bay vertical / suspension load transfer
+SF-VERTICAL-L-3,RHS 40x40x3,40,40,3,1773.05,P,"(890, 560, 430)","(2551, 580, 1050)",Bay vertical / suspension load transfer
+SF-VERTICAL-L-4,RHS 40x40x3,40,40,3,1092.73,P,"(2551, 560, 430)","(3559, 600, 850)",Bay vertical / suspension load transfer
+SF-VERTICAL-L-5,RHS 40x40x3,40,40,3,1058.39,P,"(3559, 580, 360)","(4545, 400, 700)",Bay vertical / suspension load transfer
+SF-DIAG-A-L-1,RHS 40x40x3,40,40,3,1819.31,P,"(-800, 650, 280)","(890, 580, 950)",Triangulated side bay
+SF-DIAG-B-L-1,RHS 40x40x3,40,40,3,924.18,P,"(-750, 650, 820)","(0, 650, 280)",Triangulated side bay
+SF-DIAG-A-L-2,RHS 40x40x3,40,40,3,2665.6,P,"(0, 650, 280)","(2551, 580, 1050)",Triangulated side bay
+SF-DIAG-B-L-2,RHS 40x40x3,40,40,3,520.38,P,"(890, 580, 950)","(890, 560, 430)",Triangulated side bay
+SF-DIAG-A-L-3,RHS 40x40x3,40,40,3,2702.14,P,"(890, 560, 430)","(3559, 600, 850)",Triangulated side bay
+SF-DIAG-B-L-3,RHS 40x40x3,40,40,3,620.32,P,"(2551, 580, 1050)","(2551, 560, 430)",Triangulated side bay
+SF-DIAG-A-L-4,RHS 40x40x3,40,40,3,2018.55,P,"(2551, 560, 430)","(4545, 400, 700)",Triangulated side bay
+SF-DIAG-B-L-4,RHS 40x40x3,40,40,3,490.41,P,"(3559, 600, 850)","(3559, 580, 360)",Triangulated side bay
+SF-LOWER-R-1,RHS 50x50x3,50,50,3,800.0,P,"(-800, -650, 280)","(0, -650, 280)",Primary lower rail
+SF-LOWER-R-2,RHS 50x50x3,50,50,3,907.03,P,"(0, -650, 280)","(890, -560, 430)",Primary lower rail
+SF-LOWER-R-3,RHS 50x50x3,50,50,3,1661.0,P,"(890, -560, 430)","(2551, -560, 430)",Primary lower rail
+SF-LOWER-R-4,RHS 50x50x3,50,50,3,1010.63,P,"(2551, -560, 430)","(3559, -580, 360)",Primary lower rail
+SF-LOWER-R-5,RHS 50x50x3,50,50,3,994.73,P,"(3559, -580, 360)","(4545, -450, 380)",Primary lower rail
+SF-UPPER-R-1,RHS 40x40x3,40,40,3,1646.63,P,"(-750, -650, 820)","(890, -580, 950)",Upper perimeter rail
+SF-UPPER-R-2,RHS 40x40x3,40,40,3,1664.01,P,"(890, -580, 950)","(2551, -580, 1050)",Upper perimeter rail
+SF-UPPER-R-3,RHS 40x40x3,40,40,3,1027.84,P,"(2551, -580, 1050)","(3559, -600, 850)",Upper perimeter rail
+SF-UPPER-R-4,RHS 40x40x3,40,40,3,1017.2,P,"(3559, -600, 850)","(4545, -400, 700)",Upper perimeter rail
+SF-VERTICAL-R-1,RHS 40x40x3,40,40,3,542.31,P,"(-800, -650, 280)","(-750, -650, 820)",Bay vertical / suspension load transfer
+SF-VERTICAL-R-2,RHS 40x40x3,40,40,3,1116.2,P,"(0, -650, 280)","(890, -580, 950)",Bay vertical / suspension load transfer
+SF-VERTICAL-R-3,RHS 40x40x3,40,40,3,1773.05,P,"(890, -560, 430)","(2551, -580, 1050)",Bay vertical / suspension load transfer
+SF-VERTICAL-R-4,RHS 40x40x3,40,40,3,1092.73,P,"(2551, -560, 430)","(3559, -600, 850)",Bay vertical / suspension load transfer
+SF-VERTICAL-R-5,RHS 40x40x3,40,40,3,1058.39,P,"(3559, -580, 360)","(4545, -400, 700)",Bay vertical / suspension load transfer
+SF-DIAG-A-R-1,RHS 40x40x3,40,40,3,1819.31,P,"(-800, -650, 280)","(890, -580, 950)",Triangulated side bay
+SF-DIAG-B-R-1,RHS 40x40x3,40,40,3,924.18,P,"(-750, -650, 820)","(0, -650, 280)",Triangulated side bay
+SF-DIAG-A-R-2,RHS 40x40x3,40,40,3,2665.6,P,"(0, -650, 280)","(2551, -580, 1050)",Triangulated side bay
+SF-DIAG-B-R-2,RHS 40x40x3,40,40,3,520.38,P,"(890, -580, 950)","(890, -560, 430)",Triangulated side bay
+SF-DIAG-A-R-3,RHS 40x40x3,40,40,3,2702.14,P,"(890, -560, 430)","(3559, -600, 850)",Triangulated side bay
+SF-DIAG-B-R-3,RHS 40x40x3,40,40,3,620.32,P,"(2551, -580, 1050)","(2551, -560, 430)",Triangulated side bay
+SF-DIAG-A-R-4,RHS 40x40x3,40,40,3,2018.55,P,"(2551, -560, 430)","(4545, -400, 700)",Triangulated side bay
+SF-DIAG-B-R-4,RHS 40x40x3,40,40,3,490.41,P,"(3559, -600, 850)","(3559, -580, 360)",Triangulated side bay
+SF-LOWER-CROSS-1,RHS 50x50x3,50,50,3,1300.0,P,"(-800, 650, 280)","(-800, -650, 280)",Lower floor / suspension crossmember
+SF-LOWER-CROSS-2,RHS 50x50x3,50,50,3,1300.0,P,"(0, 650, 280)","(0, -650, 280)",Lower floor / suspension crossmember
+SF-LOWER-CROSS-3,RHS 50x50x3,50,50,3,1120.0,P,"(890, 560, 430)","(890, -560, 430)",Lower floor / suspension crossmember
+SF-LOWER-CROSS-4,RHS 50x50x3,50,50,3,1120.0,P,"(2551, 560, 430)","(2551, -560, 430)",Lower floor / suspension crossmember
+SF-LOWER-CROSS-5,RHS 50x50x3,50,50,3,1160.0,P,"(3559, 580, 360)","(3559, -580, 360)",Lower floor / suspension crossmember
+SF-UPPER-CROSS-1,RHS 40x40x3,40,40,3,1300.0,P,"(-750, 650, 820)","(-750, -650, 820)",Upper spaceframe crossmember
+SF-UPPER-CROSS-2,RHS 40x40x3,40,40,3,1160.0,P,"(890, 580, 950)","(890, -580, 950)",Upper spaceframe crossmember
+SF-UPPER-CROSS-3,RHS 40x40x3,40,40,3,1160.0,P,"(2551, 580, 1050)","(2551, -580, 1050)",Upper spaceframe crossmember
+SF-UPPER-CROSS-4,RHS 40x40x3,40,40,3,1200.0,P,"(3559, 600, 850)","(3559, -600, 850)",Upper spaceframe crossmember
+SF-UPPER-CROSS-5,RHS 40x40x3,40,40,3,800.0,P,"(4545, 400, 700)","(4545, -400, 700)",Upper spaceframe crossmember
+SF-NOSE-LOW-L,RHS 40x40x3,40,40,3,301.66,P,"(4545, 450, 380)","(4805, 300, 350)",Forward nose lower rail
+SF-NOSE-UP-L,RHS 40x40x3,40,40,3,304.3,P,"(4545, 400, 700)","(4805, 250, 650)",Forward nose upper rail
+SF-NOSE-DIAG-L,RHS 40x40x3,40,40,3,424.85,P,"(4545, 450, 380)","(4805, 250, 650)",Nose pyramid diagonal
+SF-REAR-PYRAMID-L,RHS 40x40x3,40,40,3,542.31,P,"(-800, 650, 280)","(-750, 650, 820)",Rear donor-bay upright
+SF-NOSE-LOW-R,RHS 40x40x3,40,40,3,301.66,P,"(4545, -450, 380)","(4805, -300, 350)",Forward nose lower rail
+SF-NOSE-UP-R,RHS 40x40x3,40,40,3,304.3,P,"(4545, -400, 700)","(4805, -250, 650)",Forward nose upper rail
+SF-NOSE-DIAG-R,RHS 40x40x3,40,40,3,424.85,P,"(4545, -450, 380)","(4805, -250, 650)",Nose pyramid diagonal
+SF-REAR-PYRAMID-R,RHS 40x40x3,40,40,3,542.31,P,"(-800, -650, 280)","(-750, -650, 820)",Rear donor-bay upright
+SF-COCKPIT-REAR-POST-L,RHS 50x50x3,50,50,3,920.0,P,"(890, 580, 430)","(890, 580, 1350)",Rear cockpit cage post
+SF-COCKPIT-FRONT-POST-L,RHS 50x50x3,50,50,3,920.0,P,"(2551, 580, 430)","(2551, 580, 1350)",Front cockpit cage post
+SF-DOOR-INTRUSION-A-L,RHS 40x40x3,40,40,3,1110.0,P,"(1050, 650, 560)","(2100, 650, 920)",Side intrusion diagonal
+SF-DOOR-INTRUSION-B-L,RHS 40x40x3,40,40,3,1110.0,P,"(1050, 650, 920)","(2100, 650, 560)",Side intrusion diagonal
+SF-COCKPIT-REAR-POST-R,RHS 50x50x3,50,50,3,920.0,P,"(890, -580, 430)","(890, -580, 1350)",Rear cockpit cage post
+SF-COCKPIT-FRONT-POST-R,RHS 50x50x3,50,50,3,920.0,P,"(2551, -580, 430)","(2551, -580, 1350)",Front cockpit cage post
+SF-DOOR-INTRUSION-A-R,RHS 40x40x3,40,40,3,1110.0,P,"(1050, -650, 560)","(2100, -650, 920)",Side intrusion diagonal
+SF-DOOR-INTRUSION-B-R,RHS 40x40x3,40,40,3,1110.0,P,"(1050, -650, 920)","(2100, -650, 560)",Side intrusion diagonal
+SF-COCKPIT-REAR-HOOP,RHS 50x50x3,50,50,3,1160.0,P,"(890, -580, 1350)","(890, 580, 1350)",Rear cage hoop tie
+SF-COCKPIT-FRONT-HOOP,RHS 50x50x3,50,50,3,1160.0,P,"(2551, -580, 1350)","(2551, 580, 1350)",Front cage hoop tie
+SF-ROOF-RAIL-L,RHS 50x50x3,50,50,3,1661.0,P,"(890, 580, 1350)","(2551, 580, 1350)",Cage roof rail
+SF-ROOF-RAIL-R,RHS 50x50x3,50,50,3,1661.0,P,"(890, -580, 1350)","(2551, -580, 1350)",Cage roof rail
+SF-ROOF-X-1,RHS 40x40x3,40,40,3,2025.96,P,"(890, -580, 1350)","(2551, 580, 1350)",Roof triangulation
+SF-ROOF-X-2,RHS 40x40x3,40,40,3,2025.96,P,"(890, 580, 1350)","(2551, -580, 1350)",Roof triangulation
+SF-COWL-DIAG-L,RHS 40x40x3,40,40,3,1332.46,P,"(2551, 580, 1350)","(3350, 425, 295)",Front cowl to suspension bay diagonal
+SF-COWL-DIAG-R,RHS 40x40x3,40,40,3,1332.46,P,"(2551, -580, 1350)","(3350, -425, 295)",Front cowl to suspension bay diagonal
 F1-C18-ADAPTER-L,RHS,60,80,4,189.64,P,"(2375, 510, 445)","(2551, 579, 430)",Cabin-to-C18 adapter; no donor holes
 F1-C18-ADAPTER-R,RHS,60,80,4,189.64,P,"(2375, -510, 445)","(2551, -579, 430)",Cabin-to-C18 adapter; no donor holes
 F1-C18-ADAPTER-TIE,RHS,60,60,4,1158.0,P,"(2551, -579, 430)","(2551, 579, 430)",Front module rear tie; donor interface not measured

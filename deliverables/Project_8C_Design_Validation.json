@@ -8,6 +8,7 @@
     "Project_8C_Chassis_03_Rear.step",
     "Project_8C_Donor_Proxies_Review.step",
     "Project_8C_Structural_Chassis_Assembly.step",
+    "Project_8C_Spaceframe_Architecture.step",
     "Project_8C_Master_Chassis_Assembly.step"
   ],
   "module_counts": {
@@ -15,8 +16,9 @@
     "cabin": 22,
     "rear": 5,
     "interfaces": 17,
-    "structural": 46,
-    "review_assembly": 54
+    "spaceframe": 78,
+    "structural": 124,
+    "review_assembly": 132
   },
   "bbox_mm": {
     "front": [
@@ -43,21 +45,29 @@
       -7.189,
       940.0
     ],
+    "spaceframe": [
+      -839.83,
+      4831.29,
+      -650.838,
+      700.166,
+      279.162,
+      1400.0
+    ],
     "structural_assembly": [
       -851.0,
-      4545.301,
-      -650.108,
+      4831.29,
+      -650.838,
       710.0,
       259.672,
-      1150.0
+      1400.0
     ],
     "review_assembly": [
       -1305.085,
-      4805.085,
+      4831.29,
       -882.5,
       882.5,
       -7.189,
-      1384.227
+      1400.0
     ]
   },
   "axis_check": true,
